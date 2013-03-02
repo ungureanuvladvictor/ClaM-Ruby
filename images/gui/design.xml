@@ -1,0 +1,36 @@
+<mockup version="1.0" skin="sketch" fontFace="Balsamiq Sans" measuredW="916" measuredH="295" mockupW="477" mockupH="249">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="439" y="46" w="477" h="249" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <close>true</close>
+        <dragger>true</dragger>
+        <maximizeRestore>true</maximizeRestore>
+        <minimize>true</minimize>
+        <text>Clam</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::DataGrid" x="458" y="119" w="445" h="139" measuredW="449" measuredH="136" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <rowHeight>23</rowHeight>
+        <text>Quiz/Student%2C%20%20Vova%20T.%2C%20Stas%20T.%2C%20Sasha%20M.%2C%20Artem%20D.%2C%20Vova%20C.%2C%20Rescale%0AQuiz%20%231%20%2C%2076%2C%2089%2C%2054%2C%2067%2C%2043%2C%20%5B%5D%0AQuiz%20%232%20%2C%2036%2C%2087%2C%2054%2C%2065%2C%2067%2C%20%5B%5D%0AQuiz%20%233%20%2C%20100%2C%2045%2C%200%2C%2099%2C%2056%2C%20%5B%5D%0AQuiz%20%234%20%2C%207%2C%208%2C%207%2C%207%2C%207%2C%20%5B%5D%0AQuiz%20%235%20%2C%20100%2C%20100%2C%20100%2C%20100%2C%20100%2C%20%5B%5D</text>
+        <verticalScrollbar>false</verticalScrollbar>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::PointyButton" x="456" y="78" w="-1" h="-1" measuredW="56" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <direction>left</direction>
+        <text>%20Back%20</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::Button" x="550" y="81" w="138" h="28" measuredW="50" measuredH="27" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Print</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::Button" x="703" y="82" w="168" h="27" measuredW="105" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Export%20to%20PDF</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
