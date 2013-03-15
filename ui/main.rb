@@ -5,6 +5,6 @@ require 'ui_quiz'
 require 'ui_table'
 
 Shoes.app(
-	:width => 300, 
-	:height => 500, 
+	:width => 350, 
+	:height => 450, 
 	:title => "Jacobs CLaM")

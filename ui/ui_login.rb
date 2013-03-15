@@ -4,9 +4,10 @@
 
  def login
 
-	stack do
+	stack(:margin => 10) do
 
-		tagline "Welcome to CLAM!"
+		para ""
+		tagline "Welcome to CLaM!"
 		caption "Please, authorize."
 		para ""
 		flow(:margin => 10) do
@@ -22,14 +23,19 @@
 			para "Remember me"
 		end
 		@b1 = button "Login" do
+			
+			#check username and password here
+
 			log = ask "name = #{@username.text}, pass = #{@password.text}, rememberme = #{@remember.checked?}. Do checking for validity here.\n(s) to log as student, (p) as professor, (q) to reject the data."
-				
+			
+			#do the redirecting according to user's rights
+
 			if (log == "p")
-				alert "Professor!"
+				visit "/professor_menu/#{@username.text}"
 			elsif (log == "s")
-				alert "Student!"
+				visit "/student_menu/#{@username.text}"
 			elsif (log == "q")
-				alert "Wrong data!"
+				alert "Username/password is wrong. Please, try again or ask your teacher for assistance."
 			end
 		end
 		@b1.style :width => 200, :margin => 10
