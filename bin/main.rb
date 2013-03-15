@@ -5,13 +5,18 @@ require '../lib/quiz'
 require '../lib/student'
 require '../lib/professor'
 
+e = Error.new("log.txt")
 a = Question.new(1, "someQuestion1 ?", ["answer", "anotherAnswer", "someRandomAnswer", "theCorrectAnswer"], "theCorrectAnswer")
 b = Question.new(2, "someQuestion2 ?", ["pickMe", "no!PickMe", "randomAnswer"], "randomAnswer")
 c = Question.new(3, "Who is from Macedonia ?", ["Vlad", "Dmitrii", "Filip"], "Filip")
 
 q = Quiz.new(1,"randomQuiz",[a,b,c],0)
 
-puts "\nLet us do the quiz for " + q.title + "\n\n"
+puts "\nWhat is your name student?"
+
+name = gets.chomp
+
+puts "\nHello " + name + " ! Let us do the quiz for " + q.title + "\n\n"
 
 for i in 0...q.question.size
   puts q.question[i].question
@@ -27,3 +32,4 @@ for i in 0...q.question.size
 end
 
 puts "Your score is: " + q.getGrade.to_s
+e.log("Student "+name+" scored "+q.getGrade.to_s+" for the quiz "+q.title.to_s+".")
