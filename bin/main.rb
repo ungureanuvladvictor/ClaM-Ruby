@@ -2,6 +2,8 @@ require '../lib/error'
 require '../lib/grade'
 require '../lib/question'
 require '../lib/quiz'
+require '../lib/student'
+require '../lib/professor'
 
 er = Error.new("error.txt")
 er.log("debug")
