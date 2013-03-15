@@ -1,4 +1,4 @@
-require 'quiz.rb'
+require '../lib/quiz.rb'
 
 class Student
   attr_accessor: username
