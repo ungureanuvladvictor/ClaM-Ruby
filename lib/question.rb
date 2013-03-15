@@ -43,4 +43,8 @@ class Question
     @answer
   end
 
+  def verifAnswer(ans)
+    b = ans.split(" ")
+    b.to_set == @answer.to_set
+  end
 end

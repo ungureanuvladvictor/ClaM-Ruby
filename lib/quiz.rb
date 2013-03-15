@@ -10,8 +10,8 @@ class Quiz
   def initialize(id, title, question, grade)
     @grade = Grade.new()
     @question = Question.new()
-    @grade.setGrade(grade.getGrade()) unless grade.nil?
-    @question.setQuestion(question.getQuestion()) unless question.nil?
+    @grade.value=grade unless grade.nil?
+    @question = question unless question.nil?
     @id = id
     @title = title
   end
@@ -33,11 +33,11 @@ class Quiz
   end
 
   def setQuestions(questions)
-    @question.setQuestion(question)
+    @question = question
   end
 
   def getQuestions()
-    @question.getQuestion()
+    @question
   end
 
   def setGrade(grade)
