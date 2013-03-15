@@ -7,4 +7,4 @@ require 'ui_table'
 Shoes.app(
 	:width => 350, 
 	:height => 450, 
-	:title => "Jacobs CLaM")
+	:title => "Jacobs CLaM") 
