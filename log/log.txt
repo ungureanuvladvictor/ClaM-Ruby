@@ -1,1 +1,5 @@
 2013-3-16 4:7:13 Student Vlad scored 3 in the quiz on the topic randomQuiz.
+2013-3-16 11:32:21 Student vlad scored 1 in the quiz on the topic randomQuiz.
+2013-3-16 11:57:33 Student vlad scored 0 in the quiz on the topic randomQuiz.
+2013-3-16 12:26:57 Student vlad scored 2 in the quiz on the topic randomQuiz.
+2013-3-16 14:38:33 Student Vlad scored 0 in the quiz on the topic randomQuiz.

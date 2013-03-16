@@ -1,14 +1,15 @@
 require '../lib/error'
-require '../lib/grade'
 require '../lib/question'
 require '../lib/quiz'
-require '../lib/Student'
-require '../lib/professor'
-require 'xml-simple'
+require 'xmlsimple.rb'
+require '../lib/AESCrypt'
+require 'securerandom'
+
+key = "12345678912345678912345678912345"
 
 e = Error.new("../log/log.txt")
-quizFile = File.open("../quizzes/quizzes.xml",'r')
-fileContent = quizFile.read
+quizFile = File.open("../quizzes/quizzez.xml",'r')
+fileContent = AESCrypt.decrypt(quizFile.read,key,nil,"AES-256-CBC")
 
 import = XmlSimple.xml_in(fileContent, { 'KeyAttr' => 'name' })
 
@@ -25,16 +26,14 @@ for i in 1..import['Questions'][0].size do
   question.question = import['Questions'][0]['Q'+i.to_s][0]['question']
   question.answer = import['Questions'][0]['Q'+i.to_s][0]['answer']
   question.input = import['Questions'][0]['Q'+i.to_s][0]['input']
-  questions<<question
+  questions << question
 end
 
 newQuiz.question = questions
 
-
 puts "\nWhat is your name, student?"
 
 name = gets.chomp
-
 
 for i in 0...newQuiz.question.size
   puts newQuiz.question[i].question
@@ -53,26 +52,27 @@ e.log("Student "+ name + " scored " + newQuiz.getGrade.to_s + " in the quiz on t
 
 puts "Your score is: " + newQuiz.getGrade.to_s
 
-
 =begin
 export = Hash.new()
-intrebari = Hash.new
+expQuest = Hash.new
 
-export['id'] = q.id
-export['title'] = q.title
-export['grade'] = q.getGrade.to_s
+export['id'] = newQuiz.id
+export['title'] = newQuiz.title
+export['grade'] = newQuiz.getGrade.to_s
 
-for i in 0...q.question.size
-  intrebare = Hash.new
-  intrebare['id'] = q.question[i].id
-  intrebare['question'] = q.question[i].question
-  intrebare['input'] = q.question[i].input
-  intrebare['answer']  = q.question[i].answer
-  intrebari["Q" + q.question[i].id.to_s] = intrebare
+for i in 0...newQuiz.question.size
+  quest = Hash.new
+  quest['id'] = newQuiz.question[i].id
+  quest['question'] = newQuiz.question[i].question
+  quest['input'] = newQuiz.question[i].input
+  quest['answer']  = newQuiz.question[i].answer
+  expQuest["Q" + newQuiz.question[i].id.to_s] = quest
 end
 
-export['Questions'] = intrebari
+export['Questions'] = expQuest
 
-File.open("../quizzes/quizzes.xml",'w') {|f|
-f.write(XmlSimple.xml_out(export))}
+File.open("../quizzes/quizzez.xml",'w') {|f|
+  stuffToExport = XmlSimple.xml_out(export)
+  f.write(AESCrypt.encrypt(stuffToExport,key,nil,"AES-256-CBC"))
+}
 =end
