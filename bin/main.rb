@@ -2,9 +2,9 @@ require '../lib/error'
 require '../lib/grade'
 require '../lib/question'
 require '../lib/quiz'
-require '../lib/student'
+require '../lib/Student'
 require '../lib/professor'
-require 'xmlsimple'
+require 'xml-simple'
 
 e = Error.new("../log/log.txt")
 quizFile = File.open("../quizzes/quizzes.xml",'r')

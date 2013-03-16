@@ -5,7 +5,6 @@
  def login
 
 	stack(:margin => 10) do
-
 		para ""
 		tagline "Welcome to CLaM!"
 		caption "Please, authorize."
