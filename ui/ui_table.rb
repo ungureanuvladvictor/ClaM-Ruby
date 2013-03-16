@@ -33,7 +33,7 @@ class Table < Shoes::Widget
     @item=[]
     @headers.each { |x| @width+=(x[1]+1)  }
     nostroke
-    fill red
+    fill gray
     @top=opts[:top]
     @left=opts[:left]
     @rec=rect :top => 0, :left => 0, :width=>@width+mult*12+2, :height=>31*(@height+1)+4 
@@ -66,14 +66,14 @@ class Table < Shoes::Widget
 
             hover do
               if @state==:enabled
-                @item[i].contents.each{|x| x.style(:fill=>dimgray)}
+                @item[i].contents.each{|x| x.style(:fill=>lightblue)}
               end
             end
             leave do
               if @state==:enabled
                 if @selected
                   if @selected==i
-                    @item[i].contents.each{|x| x.style(:fill=>salmon)}
+                    @item[i].contents.each{|x| x.style(:fill=>white)}
                   else
                     @item[i].contents.each{|x| x.style(:fill=>white)}
                   end
@@ -86,15 +86,15 @@ class Table < Shoes::Widget
               if @state==:enabled
                 if @selected
                   if @selected==i
-                    @item[i].contents.each{|x| x.style(:fill=>white)}
+                    @item[i].contents.each{|x| x.style(:fill=>lightblue)}
                     @selected=nil
                   else
                     @item[@selected].contents.each{|x| x.style(:fill=>white)} 
-                    @item[i].contents.each{|x| x.style(:fill=>salmon)}
+                    @item[i].contents.each{|x| x.style(:fill=>lightblue)}
                     @selected=i
                   end
                 else
-                  @item[i].contents.each{|x| x.style(:fill=>salmon)}
+                  @item[i].contents.each{|x| x.style(:fill=>white)}
                   @selected=i
                 end
                 @block.call @items[i] if @selected and @block

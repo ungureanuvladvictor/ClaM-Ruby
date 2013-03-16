@@ -4,7 +4,13 @@ require 'ui_professor'
 require 'ui_quiz'
 
 Shoes.app(
-	:width => 350, 
+	:width => 375, 
 	:height => 450, 
 	:title => "Jacobs CLaM",
-	:resizeable => false) 
+	:resizeable => false)
+
+#todo:
+
+#addquiz
+#addstudent
+#quiz(id)

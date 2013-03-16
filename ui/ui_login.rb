@@ -3,6 +3,7 @@
  url '/', :login
 
  def login
+ 	$lastvisited = "/"
 
 	stack(:margin => 10) do
 		para ""
@@ -23,6 +24,7 @@
 		end
 		@b1 = button "Login" do
 			
+			$name = @username.text
 			#check username and password here
 
 			log = ask "name = #{@username.text}, pass = #{@password.text}, rememberme = #{@remember.checked?}. Do checking for validity here.\n(s) to log as student, (p) as professor, (q) to reject the data."
@@ -30,9 +32,9 @@
 			#do the redirecting according to user's rights
 
 			if (log == "p")
-				visit "/professor_menu/#{@username.text}"
+				visit "/professor_menu"
 			elsif (log == "s")
-				visit "/student_menu/#{@username.text}"
+				visit "/student_menu"
 			elsif (log == "q")
 				alert "Username/password is wrong. Please, try again or ask your teacher for assistance."
 			end
