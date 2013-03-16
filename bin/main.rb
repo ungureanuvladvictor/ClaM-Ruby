@@ -4,32 +4,75 @@ require '../lib/question'
 require '../lib/quiz'
 require '../lib/student'
 require '../lib/professor'
+require 'xmlsimple'
 
-e = Error.new("log.txt")
-a = Question.new(1, "someQuestion1 ?", ["answer", "anotherAnswer", "someRandomAnswer", "theCorrectAnswer"], "theCorrectAnswer")
-b = Question.new(2, "someQuestion2 ?", ["pickMe", "no!PickMe", "randomAnswer"], "randomAnswer")
-c = Question.new(3, "Who is from Macedonia ?", ["Vlad", "Dmitrii", "Filip"], "Filip")
+e = Error.new("../log/log.txt")
+quizFile = File.open("../quizzes/quizzes.xml",'r')
+fileContent = quizFile.read
 
-q = Quiz.new(1,"randomQuiz",[a,b,c],0)
+import = XmlSimple.xml_in(fileContent, { 'KeyAttr' => 'name' })
 
-puts "\nWhat is your name student?"
+newQuiz = Quiz.new(nil,nil,nil,nil)
+newQuiz.setID(import['id'])
+newQuiz.setTitle(import['title'])
+newQuiz.setGrade(import['grade'])
+
+questions = Array.new
+
+for i in 1..import['Questions'][0].size do
+  question = Question.new
+  question.id  = import['Questions'][0]['Q'+i.to_s][0]['id']
+  question.question = import['Questions'][0]['Q'+i.to_s][0]['question']
+  question.answer = import['Questions'][0]['Q'+i.to_s][0]['answer']
+  question.input = import['Questions'][0]['Q'+i.to_s][0]['input']
+  questions<<question
+end
+
+newQuiz.question = questions
+
+
+puts "\nWhat is your name, student?"
 
 name = gets.chomp
 
-puts "\nHello " + name + " ! Let us do the quiz for " + q.title + "\n\n"
 
-for i in 0...q.question.size
-  puts q.question[i].question
-  for j in 0...q.question[i].input.size
+for i in 0...newQuiz.question.size
+  puts newQuiz.question[i].question
+  for j in 0...newQuiz.question[i].input.size
     print j+1
     print ". "
-    puts q.question[i].input[j]
+    puts newQuiz.question[i].input[j]
   end
   print "\nYour answer: "
   answer = gets.chomp
-  q.setGrade(1 + q.getGrade) if answer.downcase == q.question[i].answer.downcase
+  newQuiz.grade.value = 1 + newQuiz.grade.value.to_i if answer.downcase == newQuiz.question[i].answer.downcase
   puts
 end
 
-puts "Your score is: " + q.getGrade.to_s
-e.log("Student "+name+" scored "+q.getGrade.to_s+" for the quiz "+q.title.to_s+".")
+e.log("Student "+ name + " scored " + newQuiz.getGrade.to_s + " in the quiz on the topic " + newQuiz.title + ".")
+
+puts "Your score is: " + newQuiz.getGrade.to_s
+
+
+=begin
+export = Hash.new()
+intrebari = Hash.new
+
+export['id'] = q.id
+export['title'] = q.title
+export['grade'] = q.getGrade.to_s
+
+for i in 0...q.question.size
+  intrebare = Hash.new
+  intrebare['id'] = q.question[i].id
+  intrebare['question'] = q.question[i].question
+  intrebare['input'] = q.question[i].input
+  intrebare['answer']  = q.question[i].answer
+  intrebari["Q" + q.question[i].id.to_s] = intrebare
+end
+
+export['Questions'] = intrebari
+
+File.open("../quizzes/quizzes.xml",'w') {|f|
+f.write(XmlSimple.xml_out(export))}
+=end

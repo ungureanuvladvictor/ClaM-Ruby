@@ -1,0 +1,20 @@
+<opt id="1" title="randomQuiz" grade="0">
+  <Questions>
+    <Q1 id="1" question="someQuestion1 ?" answer="theCorrectAnswer">
+      <input>answer</input>
+      <input>anotherAnswer</input>
+      <input>someRandomAnswer</input>
+      <input>theCorrectAnswer</input>
+    </Q1>
+    <Q2 id="2" question="someQuestion2 ?" answer="randomAnswer">
+      <input>pickMe</input>
+      <input>no!PickMe</input>
+      <input>randomAnswer</input>
+    </Q2>
+    <Q3 id="3" question="Who is from Macedonia ?" answer="Filip">
+      <input>Vlad</input>
+      <input>Dmitrii</input>
+      <input>Filip</input>
+    </Q3>
+  </Questions>
+</opt>

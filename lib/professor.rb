@@ -53,4 +53,9 @@ class Professor
 
   end
 
+  def exportQuizzes(quizzes)
+    q = Quiz.new(nil,nil,nil,nil)
+    q = quizzes
+  end
+
 end
