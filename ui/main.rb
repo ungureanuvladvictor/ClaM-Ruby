@@ -13,4 +13,4 @@ Shoes.app(
 
 #addquiz
 #addstudent
-#quiz(id)
+#quiz

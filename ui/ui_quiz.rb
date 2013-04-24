@@ -10,7 +10,48 @@ url '/add_quiz', :add_quiz
 # Taking quiz
 def quiz(id)
 
+	stack(:margin => 10) do
 
+		time = Time.now + (30*60);
+
+		caption "Quiz  ##{id}"
+		@timeLabel = caption "Time left: 30 minutes 0 seconds"
+
+		animate(5) do #Timer
+			left = ((time - Time.now)/60).to_i
+			seconds = ((time - Time.now) - (left*60)).floor
+			@timeLabel.replace "Time left: #{left} minutes #{seconds} seconds."
+
+			if (left == 0 && seconds == 0)
+				alert "Time's out!"
+				submit
+			end
+		end
+
+		@content = stack :width => 340,:height  => 320, :scroll=>true do
+			#Feed with quiz questions
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+			caption "DERP"
+		end
+
+		# Add spacing here somehow
+		button ("Submit"){submit}
+
+	end
+end
+
+def submit
+	alert "Quiz submitted!"
+	visit "/student_menu"
 end
 
 # Extended statistics for a quiz
