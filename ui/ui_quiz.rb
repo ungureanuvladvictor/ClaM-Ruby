@@ -80,7 +80,7 @@ def quiz_stats(id)
 
 		flow do
 			@b23 = button "Manage questions" do	
-				$lastvisited = "/quiz_stats"
+				$lastvisited = "/quiz_stats/#{id}"
 				visit "/manage_questions/#{id}"
 			end
 
@@ -113,7 +113,7 @@ def manage_questions(id)
 			@name = edit_line(:width => 0.6, :right => 20)
 		end
 
-		id = 0
+		m_id = 0
 		@option = Array.new(50)
 		@out = Array.new(50)
 		@erase = Array.new(50)
@@ -123,17 +123,17 @@ def manage_questions(id)
 		flow do
 			@add = button "+ Add" do
 
-				id = id + 1
+				m_id = m_id + 1
 
 				type = ask "Which type of question?\n[M] Multiple Choice \n[S] Short Answer\n [L] Long Answer"
 
 				if (type == "M" || type == "m")
 					num = ask "How many options?"
 
-					@out[id] = stack(:margin => 10) do
+					@out[m_id] = stack(:margin => 10) do
 
 						flow do
-							para "Question \##{id}: "
+							para "Question \##{m_id}: "
 							@name = edit_line(:width => 0.6, :right => 20)
 						end
 
@@ -144,12 +144,12 @@ def manage_questions(id)
 
 						n = num.to_i
 						i = 0
-						@option[id] = Array.new(n)
+						@option[m_id] = Array.new(n)
 
 						while i < n
 							flow do
 								para "Option \##{i+1}: "
-								@option[id][i] = edit_line(:width => 0.6, :right => 20)
+								@option[m_id][i] = edit_line(:width => 0.6, :right => 20)
 
 							end
 							i = i+1
@@ -164,10 +164,10 @@ def manage_questions(id)
 					end
 
 				elsif (type == "S" || type == "s")
-					@out[id] = stack(:margin => 10) do
+					@out[m_id] = stack(:margin => 10) do
 						
 						flow do
-							para "Question \##{id}: "
+							para "Question \##{m_id}: "
 							@name = edit_line(:width => 0.6, :right => 20)
 						end
 
@@ -184,10 +184,10 @@ def manage_questions(id)
 				
 				elsif (type == "L" || type == "l")
 					
-					@out[id] = stack(:margin => 10) do
+					@out[m_id] = stack(:margin => 10) do
 					
 					flow do
-						para "Question \##{id}: "
+						para "Question \##{m_id}: "
 						@name = edit_line(:width => 0.6, :right => 20)
 					end
 
@@ -203,6 +203,9 @@ def manage_questions(id)
 
 					end
 
+				elsif (type == "" || type.nil?)
+					#Do nothing
+
 				else 
 					alert "Please, specify correct question type!"
 				end	
@@ -210,8 +213,8 @@ def manage_questions(id)
 			end
 
 			@erase = button "- Remove" do
-				@out[id].remove
-				id = id-1
+				@out[m_id].remove
+				m_id = m_id - 1
 			end
 
 			@erase.style :margin_left => 5
@@ -223,7 +226,7 @@ def manage_questions(id)
 			@cancel.style :margin_left => 5
 
 			@submit = button "Submit!" do
-				if (id == 0)
+				if (m_id == 0)
 					alert "Please, add at least one question."
 				else
 					# CHECK FOR NUMBER OF POINTS
@@ -389,7 +392,10 @@ def add_quiz
 
 					end
 
-				else 
+				elsif (type == "" || type.nil?)
+					#Do nothing
+
+				else
 					alert "Please, specify correct question type!"
 				end	
 
