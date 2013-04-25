@@ -12,5 +12,5 @@ Shoes.app(
 #todo:
 
 #addquiz
-#addstudent
-#quizstack(:height => 10, :width => 10, :margin => 20){}@scrollbox.scroll_top(@scroll.scroll_max);
+#modifyquestions
+#modifystudents

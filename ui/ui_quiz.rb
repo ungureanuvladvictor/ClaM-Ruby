@@ -5,7 +5,7 @@ class Quiz < Shoes
 url '/quiz/(\d+)', :quiz
 url '/quiz_stats/(\d+)', :quiz_stats
 url '/manage_quizzes', :manage_quizzes
-url '/manage_questions/(\d+)' :manage_questions
+url '/manage_questions/(\d+)', :manage_questions
 url '/add_quiz', :add_quiz
 
 # Taking quiz
@@ -177,28 +177,69 @@ def add_quiz
 				type = ask "Which type of question?\n[M] Multiple Choice \n[S] Short Answer\n [L] Long Answer"
 
 				if (type == "M" || type == "m")
+					num = ask "How many options?"
+
 					@out = stack(:margin => 10) do
-					
-						flow do
+
 						para "Question \##{id}: "
-						@name = edit_line(:width => 0.6, :right => 20)
+						@name[id] = edit_line(:width => 0.6, :right => 20)
+
+						flow do
+							para "Points \##{id}: "
+							@points = edit_line(:width => 0.6, :right => 20)
 						end
+
+						for i in (1..5)
+							flow do
+								para "Option \##{i}: "
+								@option = edit_line(:width => 0.6, :right => 20)
+							end
+						end
+
+						flow do
+							para "Correct \#: "
+							@correct = edit_line(:width => 0.6, :right => 20)
+						end
+
 					end
 
 				elsif (type == "S" || type == "s")
 					@out = stack(:margin => 10) do
-					
+						
 						flow do
-						para "Question \##{id}: "
-						@name = edit_line(:width => 0.6, :right => 20)
+							para "Question \##{id}: "
+							@name = edit_line(:width => 0.6, :right => 20)
+						end
+
+						flow do
+							para "Points: "
+							@points = edit_line(:width => 0.6, :right => 20)
+						end
+
+						flow do
+							para "Correct: "
+							@correct = edit_line(:width => 0.6, :right => 20)
 						end
 					end
 				
 				elsif (type == "L" || type == "l")
+					
 					@out = stack(:margin => 10) do
 					
-					para "Question \##{id}: "
-					edit_line(:width => 0.6, :right => 20)
+					flow do
+						para "Question \##{id}: "
+						@name = edit_line(:width => 0.6, :right => 20)
+					end
+
+					flow do
+						para "Points: "
+						@points = edit_line(:width => 0.6, :right => 20)
+					end
+
+					flow do
+						para "Correct: "
+						@correct = edit_box(:width => 0.6, :height => 100, :right => 20)
+					end
 
 					end
 
