@@ -8,11 +8,11 @@ class Student
   attr_accessor :quizzesTaken
 
   def initialize(*args)
-    @username=args[0] unless args[0].nil?
-    @password=args[1] unless args[1].nil?
-    @ID=args[2] unless args[2].nil?
-    @name=args[3] unless args[3].nil?
-    @quizzesTaken=args[4] unless args[4].nil?
+    @username = args[0] unless args[0].nil?
+    @password = args[1] unless args[1].nil?
+    @ID = args[2] unless args[2].nil?
+    @name = args[3] unless args[3].nil?
+    @quizzesTaken = args[4] unless args[4].nil?
   end
 
   def getID()
@@ -36,19 +36,19 @@ class Student
   end
 
   def setUsername(username)
-    @username=username
+    @username = username
   end
 
   def setPassword(password)
-    @password=password
+    @password = password
   end
 
   def setID(id)
-    @ID=id
+    @ID = id
   end
 
   def setName(name)
-    @name=name
+    @name = name
   end
 
 end

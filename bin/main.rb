@@ -1,16 +1,19 @@
 require '../lib/error'
 require '../lib/question'
 require '../lib/quiz'
-require 'xmlsimple.rb'
+require '../lib/student'
 require '../lib/AESCrypt'
-require 'securerandom'
+require 'digest/sha1'
+require 'sqlite3'
+require 'xmlsimple'
 
-key = "12345678912345678912345678912345"
+key = '12345678912345678912345678912345'
 
-e = Error.new("../log/log.txt")
-quizFile = File.open("../quizzes/quizzez.xml",'r')
+e = Error.new('../log/log.txt')
+
+quizFile = File.open('../quizzes/quizzez.xml','r')
 fileContent = AESCrypt.decrypt(quizFile.read,key,nil,"AES-256-CBC")
-
+#import quiz
 import = XmlSimple.xml_in(fileContent, { 'KeyAttr' => 'name' })
 
 newQuiz = Quiz.new(nil,nil,nil,nil)
@@ -30,7 +33,10 @@ for i in 1..import['Questions'][0].size do
 end
 
 newQuiz.question = questions
-
+newQuiz2 = newQuiz
+newQuiz2.id = 2
+#export quiz
+=begin
 puts "\nWhat is your name, student?"
 
 name = gets.chomp
@@ -51,7 +57,7 @@ end
 e.log("Student "+ name + " scored " + newQuiz.getGrade.to_s + " in the quiz on the topic " + newQuiz.title + ".")
 
 puts "Your score is: " + newQuiz.getGrade.to_s
-
+ =end
 =begin
 export = Hash.new()
 expQuest = Hash.new
@@ -76,3 +82,13 @@ File.open("../quizzes/quizzez.xml",'w') {|f|
   f.write(AESCrypt.encrypt(stuffToExport,key,nil,"AES-256-CBC"))
 }
 =end
+
+vlad = Student.new(nil,nil,nil,nil,nil)
+vlad.setID(3)
+vlad.setName('vlad')
+vlad.setUsername('vlad')
+vlad.setPassword(Digest::SHA1.hexdigest 'vlad')
+arr = [newQuiz,newQuiz2]
+
+vlad.quizzesTaken = arr
+p vlad
