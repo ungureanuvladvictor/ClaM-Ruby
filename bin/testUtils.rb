@@ -29,7 +29,7 @@ begin
   #  executeStudentUpdate('localhost', 2000, "update student set name='andrei' where id=3")
   #p getQuestionsForQuizWithId(quiz,2)
   #getPointsForQuestionWithId(question,2)
-  p getFullQuestionsForQuizWithId(quiz,question,2)
+  p getFullQuestionsForQuizWithId(quiz,question,1)
 rescue SQLite3::Exception => e
 
   puts "Exception occured"
