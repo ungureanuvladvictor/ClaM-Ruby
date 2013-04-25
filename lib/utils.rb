@@ -8,7 +8,7 @@ def getName(db,id)
 end
 
 def getId(db,name)
-  id = db.execute "select id from student where name="+name
+  id = db.execute "select id from student where username='#{name}'"
   id = id[0][0]
   return id
 end

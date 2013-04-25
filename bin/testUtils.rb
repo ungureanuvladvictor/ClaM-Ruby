@@ -8,7 +8,8 @@ begin
   admin = SQLite3::Database.open 'Admin.db'
 
   p checkLoginAdmin(admin, "test","test")
-  p checkLoginStudent(student,"Alex","alexpass")
+  p checkLoginStudent(student,"alexuser","alexpass")
+  p getId(student,'alexuser')
   #removeQuestionWithId(question, quiz, 2)
 
   #addStudent(student,"Alex","alexpass")
