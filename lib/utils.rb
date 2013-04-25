@@ -288,8 +288,7 @@ end
 
 def getLatestQuizzes(db)
     result = Array.new
-    array = (db.execute "select id from quiz")
-    array = array.reverse
+    array = (db.execute "select id from quiz order by id DESC")
     array.each do |quizId|
       result.push(quizId,getQuizName(db,quizId))
     end
