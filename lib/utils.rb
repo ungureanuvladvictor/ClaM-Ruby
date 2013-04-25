@@ -199,10 +199,6 @@ def getPointsForQuizWithId(dbquiz, dbquestion, id)
     return totalPoints
 end
 
-def getPointsForQuestionWithId(dbquestion, id)
-    (dbquestion.execute "select points from question where id=#{id}")[0][0]
-end
-
 def setPointsForQuestionWithId(dbquestion, points, id)
     dbquestion.execute "update question set points=#{points} where id=#{id}"
 end
@@ -245,4 +241,41 @@ def executeStudentUpdate(address, port, command)
 
   sock.write( "#{command}\r\n" )
   sock.close
+end
+
+def getFullQuestionsForQuizWithId(dbquiz, dbquestion, quizId)
+    finalResult = Array.new
+    questionIds = getQuestionsForQuizWithId(dbquiz, quizId)
+    questionIds.each do |questionId|
+      name = getNameOfQuestionWithId(dbquestion, questionId)
+      type = getTypeOfQuestionWithId(dbquestion, questionId)
+      correctAnswer = getCorrectAnswerOfQuestionWithId(dbquestion, questionId)
+      answersPartial = getAnswersOfQuestionWithId(dbquestion, questionId).split("\302\261")
+      answers = answersPartial.map do |answer|
+        answer.strip
+      end
+      points = getPointsForQuestionWithId(dbquestion, questionId)
+      finalResult.push([name, points, type, correctAnswer, answers])
+    end
+    return finalResult
+end
+
+def getNameOfQuestionWithId(dbquestion, id)
+    return (dbquestion.execute "select name from question where id=#{id}")[0][0]
+end
+
+def getTypeOfQuestionWithId(dbquestion, id)
+    return (dbquestion.execute "select type from question where id=#{id}")[0][0]
+end
+
+def getCorrectAnswerOfQuestionWithId(dbquestion, id)
+    return (dbquestion.execute "select correct from question where id=#{id}")[0][0]
+end
+
+def getAnswersOfQuestionWithId(dbquestion, id)
+    return (dbquestion.execute "select answers from question where id=#{id}")[0][0]
+end
+
+def getPointsForQuestionWithId(dbquestion, id)
+    return (dbquestion.execute "select points from question where id=#{id}")[0][0]
 end

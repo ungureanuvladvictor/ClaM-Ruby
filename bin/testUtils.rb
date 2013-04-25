@@ -13,9 +13,9 @@ begin
   #p getQuizIdForName(quiz,"historyQuiz")
   #p getQuizzesTaken(student,quiz,1).size
   #p getStudentNameByUsername(student,'alexuser')
-  #removeQuestionWithId(question, quiz, 2)
-  #  #addStudent(student,"Alex","alexpass")
-  #addStudent(student,"Vlad","vladpass")
+  #  removeQuestionWithId(question, quiz, 2)
+  #  addStudent(student,"Alex","alexpass")
+  #  addStudent(student,"Vlad","vladpass")
   #p getQuizesForId(student,1)
   #p getAvailableQuizesForId(student,1)
   #p getQuizName(quiz,1)
@@ -27,7 +27,9 @@ begin
   #  removeQuizWithId(student,quiz,2)
   #  systemInit('localhost',2000)
   #  executeStudentUpdate('localhost', 2000, "update student set name='andrei' where id=3")
-
+  #p getQuestionsForQuizWithId(quiz,2)
+  #getPointsForQuestionWithId(question,2)
+  p getFullQuestionsForQuizWithId(quiz,question,2)
 rescue SQLite3::Exception => e
 
   puts "Exception occured"
