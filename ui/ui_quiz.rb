@@ -312,11 +312,10 @@ def add_quiz
 		flow do
 			@add = button "+ Add" do
 
-				id = id + 1
-
 				type = ask "Which type of question?\n[M] Multiple Choice \n[S] Short Answer\n [L] Long Answer"
 
 				if (type == "M" || type == "m")
+					id = id + 1
 					num = ask "How many options?"
 
 					@out[id] = stack(:margin => 10) do
@@ -353,6 +352,7 @@ def add_quiz
 					end
 
 				elsif (type == "S" || type == "s")
+					id = id + 1
 					@out[id] = stack(:margin => 10) do
 						
 						flow do
@@ -372,6 +372,7 @@ def add_quiz
 					end
 				
 				elsif (type == "L" || type == "l")
+					id = id + 1
 					
 					@out[id] = stack(:margin => 10) do
 					
