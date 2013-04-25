@@ -29,24 +29,21 @@ def quiz(id)
 			end
 		end
 
-		@content = stack :width => 340,:height  => 320, :scroll=>true do
-			#Feed with quiz questions
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-			caption "DERP"
-		end
+		button ("Submit!"){submit}
+		caption " "
 
-		# Add spacing here somehow
-		button ("Submit"){submit}
-
+		#Feed with quiz questions
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
+		caption "DERP"
 	end
 end
 
@@ -87,7 +84,6 @@ def quiz_stats(id)
 			@b24 = button "Rescale" do
 				resc = ask "How much percent would you like to add to everybody? (negative numbers to substract)"
 				#Do magic
-				visit $lastvisited
 			end
 
 			@b23.style :width => 160
