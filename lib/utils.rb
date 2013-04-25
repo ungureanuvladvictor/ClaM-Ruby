@@ -53,6 +53,10 @@ def getQuizName(db,id)
   return (db.execute "select name from quiz where id=#{id}")[0][0]
 end
 
+def getQuizIdForName(db, name)
+  return (db.execute "select id from quiz where name='#{name}'")[0][0]
+end
+
 def getQuizzesTaken(dbstudent, dbquiz, id)
   quiz = Array.new
   quizzNames = Array.new

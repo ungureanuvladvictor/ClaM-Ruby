@@ -10,6 +10,7 @@ begin
   #p checkLoginAdmin(admin, "test","test")
   #p checkLoginStudent(student,"alexuser","alexpass")
   p getAvailableQuizesForId(student,quiz,getId(student,'alexuser'))
+  p getQuizIdForName(quiz,"firstQuiz")
   #removeQuestionWithId(question, quiz, 2)
 
   #addStudent(student,"Alex","alexpass")
