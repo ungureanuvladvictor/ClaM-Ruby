@@ -112,21 +112,21 @@ def manage_questions(id)
 		m_id = 0
 		@option = Array.new(50)
 		@out = Array.new(50)
-		@erase = Array.new(50)
 
 		#stack(:height => 35, :width => 10, :margin => 20){}
+
+		#IMPLEMENT DELETE BUTTON FOR EVERY QUESTION!
 
 		flow do
 			@add = button "+ Add" do
 
-				m_id = m_id + 1
-
 				type = ask "Which type of question?\n[M] Multiple Choice \n[S] Short Answer\n [L] Long Answer"
 
 				if (type == "M" || type == "m")
+					m_id = m_id + 1
 					num = ask "How many options?"
 
-					@out[m_id] = stack(:margin => 10) do
+					@out[id] = stack(:margin => 10) do
 
 						flow do
 							para "Question \##{m_id}: "
@@ -139,6 +139,10 @@ def manage_questions(id)
 						end
 
 						n = num.to_i
+						if n<=0
+							alert "Please enter a positive number of options!"
+							return
+						end
 						i = 0
 						@option[m_id] = Array.new(n)
 
@@ -160,6 +164,7 @@ def manage_questions(id)
 					end
 
 				elsif (type == "S" || type == "s")
+					m_id = m_id + 1
 					@out[m_id] = stack(:margin => 10) do
 						
 						flow do
@@ -179,6 +184,7 @@ def manage_questions(id)
 					end
 				
 				elsif (type == "L" || type == "l")
+					m_id = m_id + 1
 					
 					@out[m_id] = stack(:margin => 10) do
 					
@@ -202,18 +208,29 @@ def manage_questions(id)
 				elsif (type == "" || type.nil?)
 					#Do nothing
 
-				else 
+				else
 					alert "Please, specify correct question type!"
 				end	
 
+				if m_id>0
+					@erase.state = nil;
+					@submit.state = nil;
+				end
 			end
 
 			@erase = button "- Remove" do
+
+				@out[m_id].clear
 				@out[m_id].remove
-				m_id = m_id - 1
+				m_id = m_id-1
+				if m_id==0
+					@erase.state = "disabled"
+					@submit.state = "disabled"
+				end
 			end
 
 			@erase.style :margin_left => 5
+			@erase.state = "disabled"
 
 			@cancel = button "Cancel" do
 				visit "/manage_quizzes"
@@ -222,19 +239,20 @@ def manage_questions(id)
 			@cancel.style :margin_left => 5
 
 			@submit = button "Submit!" do
-				if (m_id == 0)
-					alert "Please, add at least one question."
-				else
-					# CHECK FOR NUMBER OF POINTS
-					# CHECK IF FIELDS FILLED
-					#write to database (somehow)
-					visit "/manage_quizzes"
-				end
+				# CHECK FOR NUMBER OF POINTS
+				# CHECK IF FIELDS FILLED
+				#write to database (somehow)
+				visit "/manage_quizzes"
+			
 			end
 
 			@submit.style :margin_left => 5
+			@submit.state = "disabled"
 		end
 	end
+
+	#$lastvisited = "/add_quiz"
+
 end
 
 # Overall quiz statistics
@@ -327,6 +345,10 @@ def add_quiz
 						end
 
 						n = num.to_i
+						if n<=0
+							alert "Please enter a positive number of options!"
+							return
+						end
 						i = 0
 						@option[id] = Array.new(n)
 
@@ -396,14 +418,25 @@ def add_quiz
 					alert "Please, specify correct question type!"
 				end	
 
+				if id>0
+					@erase.state = nil;
+					@submit.state = nil;
+				end
 			end
 
 			@erase = button "- Remove" do
+
+				@out[id].clear
 				@out[id].remove
 				id = id-1
+				if id==0
+					@erase.state = "disabled"
+					@submit.state = "disabled"
+				end
 			end
 
 			@erase.style :margin_left => 5
+			@erase.state = "disabled"
 
 			@cancel = button "Cancel" do
 				visit "/manage_quizzes"
@@ -412,17 +445,15 @@ def add_quiz
 			@cancel.style :margin_left => 5
 
 			@submit = button "Submit!" do
-				if (id == 0)
-					alert "Please, add at least one question."
-				else
-					# CHECK FOR NUMBER OF POINTS
-					# CHECK IF FIELDS FILLED
-					#write to database (somehow)
-					visit "/manage_quizzes"
-				end
+				# CHECK FOR NUMBER OF POINTS
+				# CHECK IF FIELDS FILLED
+				#write to database (somehow)
+				visit "/manage_quizzes"
+			
 			end
 
 			@submit.style :margin_left => 5
+			@submit.state = "disabled"
 		end
 	end
 
