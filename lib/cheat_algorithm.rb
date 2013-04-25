@@ -18,13 +18,9 @@ def calc_cheat(a,b)
   end
   ret = counta.to_f/wordsa.count.to_f
   if wordsa.count<=10
-    if ret>0.75
-      return true
-    else
-      return false
-    end
+    return [ret>0.75,ret]
   end
-  return ret
+  return [ret>0.5,ret]
 end
 
 puts calc_cheat('This answer is very similar to the other one','This answer is extremely similar to the other one')
