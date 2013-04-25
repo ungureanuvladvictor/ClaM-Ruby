@@ -290,7 +290,8 @@ def getLatestQuizzes(db, number)
     result = Array.new
     array = (db.execute "select id from quiz order by id DESC limit #{number}")
     array.each do |quizId|
-      result.push([quizId[0],getQuizName(db,quizId)])
+      name = getQuizName(db, quizId[0])
+      result.push([quizId[0],name])
     end
     p result
 
