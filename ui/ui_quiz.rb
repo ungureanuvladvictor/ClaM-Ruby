@@ -108,7 +108,7 @@ def manage_quizzes
 
 		flow do
 			@b31 = button "Add quiz" do
-
+				visit "/add_quiz"
 			end
 			
 			@b32 = button "Clear quizzes" do
@@ -147,6 +147,89 @@ end
 
 #Adding new quiz
 def add_quiz
+
+	stack(:margin => 10) do
+		para link("Back", :click => $lastvisited)
+
+		flow(:margin => 10) do
+			para "Name: "
+			@name = edit_line(:width => 0.6, :right => 20)
+		end
+
+		#Implement points!
+		flow(:margin => 10) do
+			para "\# of points: "
+			@pts = edit_line(:width => 0.6, :right => 20)
+		end
+
+		id = 0
+
+		stack(:height => 35, :width => 10, :margin => 20){}
+
+		flow do
+			@add = button "+ Add question" do
+
+				id = id + 1
+
+				type = ask "Which type of question?\n[M] Multiple Choice \n[S] Short Answer\n [L] Long Answer"
+
+				if (type == "M" || type == "m")
+					@out = stack(:margin => 10) do
+					
+						flow do
+						para "Question \##{id}: "
+						@name = edit_line(:width => 0.6, :right => 20)
+						end
+					end
+
+				elsif (type == "S" || type == "s")
+					@out = stack(:margin => 10) do
+					
+						flow do
+						para "Question \##{id}: "
+						@name = edit_line(:width => 0.6, :right => 20)
+						end
+					end
+				
+				elsif (type == "L" || type == "l")
+					@out = stack(:margin => 10) do
+					
+					para "Question \##{id}: "
+					edit_line(:width => 0.6, :right => 20)
+
+					end
+
+				else 
+					alert "Please, specify correct question type!"
+				end	
+
+			end
+
+			@cancel = button "Cancel" do
+				visit "/manage_quizzes"
+			end
+
+			@cancel.style :margin_left => 10
+
+			@submit = button "Submit" do
+				if (id == 0)
+					alert "Please, add at least one question."
+				else
+					#write to database (somehow)
+					visit "/manage_quizzes"
+				end
+			end
+
+			@submit.style :margin_left => 10
+		end
+
+		#@add.move(0,0)
+		#cancel.move()
+		#@submit.move(100,150)
+
+	end
+
+	#$lastvisited = "/add_quiz"
 
 end
 
