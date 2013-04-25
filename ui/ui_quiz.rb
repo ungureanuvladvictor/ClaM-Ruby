@@ -15,7 +15,8 @@ def quiz(id)
 
 		time = Time.now + (30*60);
 
-		caption "Quiz  ##{id}"
+		quiz_name = getQuizName($quiz,id)
+		caption "Quiz ##{id}: #{quiz_name}"
 		@timeLabel = caption "Time left: 30 minutes 0 seconds"
 
 		animate(5) do #Timer
