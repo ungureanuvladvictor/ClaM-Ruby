@@ -250,7 +250,7 @@ def getFullQuestionsForQuizWithId(dbquiz, dbquestion, quizId)
       name = getNameOfQuestionWithId(dbquestion, questionId)
       type = getTypeOfQuestionWithId(dbquestion, questionId)
       correctAnswer = getCorrectAnswerOfQuestionWithId(dbquestion, questionId)
-      answersPartial = getAnswersOfQuestionWithId(dbquestion, questionId).split("\302\261")
+      answersPartial = getAnswersOfQuestionWithId(dbquestion, questionId).split("//")
       answers = answersPartial.map do |answer|
         answer.strip
       end
