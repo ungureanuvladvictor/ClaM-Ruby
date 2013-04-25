@@ -29,8 +29,6 @@ def quiz(id)
 			end
 		end
 
-		button ("Submit!"){submit}
-		caption " "
 
 		#Feed with quiz questions
 		caption "DERP"
@@ -44,6 +42,8 @@ def quiz(id)
 		caption "DERP"
 		caption "DERP"
 		caption "DERP"
+
+		button ("Submit!"){submit}
 	end
 end
 
