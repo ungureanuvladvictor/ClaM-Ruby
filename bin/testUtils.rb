@@ -7,7 +7,7 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-  getLatestQuizzes(quiz)
+  getLatestQuizzes(quiz,3)
   #p getAdminNameByUsername(admin,"test")
   #p checkLoginAdmin(admin, "test","test")
   #p checkLoginStudent(student,"alexuser","alexpass")

@@ -286,11 +286,12 @@ def getPointsForQuestionWithId(dbquestion, id)
     return (dbquestion.execute "select points from question where id=#{id}")[0][0]
 end
 
-def getLatestQuizzes(db)
+def getLatestQuizzes(db, number)
     result = Array.new
-    array = (db.execute "select id from quiz order by id DESC")
+    array = (db.execute "select id from quiz order by id DESC limit #{number}")
     array.each do |quizId|
-      result.push(quizId,getQuizName(db,quizId))
+      result.push([quizId[0],getQuizName(db,quizId)])
     end
     p result
+
 end
