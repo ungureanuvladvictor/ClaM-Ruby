@@ -7,7 +7,7 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-  p checkLoginAdmin(admin, "testProfessor","professorPassword")
+  p checkLoginAdmin(admin, "testProfessor","passwordProfessor")
   #removeQuestionWithId(question, quiz, 2)
 
   #addStudent(student,"Alex","alexpass")
