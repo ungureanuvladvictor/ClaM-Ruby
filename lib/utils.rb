@@ -8,6 +8,10 @@ def getStudentNameByUsername(db, username)
   return (db.execute "select name from student where username='#{username}'")[0][0]
 end
 
+def getAdminNameByUsername(db, username)
+    return (db.execute "select name from admin where username='#{username}'")[0][0]
+end
+
 def getId(db,name)
   id = db.execute "select id from student where username='#{name}'"
   id = id[0][0]
@@ -280,4 +284,14 @@ end
 
 def getPointsForQuestionWithId(dbquestion, id)
     return (dbquestion.execute "select points from question where id=#{id}")[0][0]
+end
+
+def getLatestQuizzes(db)
+    result = Array.new
+    array = (db.execute "select id from quiz")
+    array = array.reverse
+    array.each do |quizId|
+      result.push(quizId,getQuizName(db,quizId))
+    end
+    p result
 end
