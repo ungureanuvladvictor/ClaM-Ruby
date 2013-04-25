@@ -113,18 +113,12 @@ def manage_questions(id)
 			@name = edit_line(:width => 0.6, :right => 20)
 		end
 
-		#Implement points!
-		flow(:margin => 10) do
-			para "\# of points: "
-			@pts = edit_line(:width => 0.6, :right => 20)
-		end
-
 		id = 0
 		@option = Array.new(50)
 		@out = Array.new(50)
 		@erase = Array.new(50)
 
-		stack(:height => 35, :width => 10, :margin => 20){}
+		#stack(:height => 35, :width => 10, :margin => 20){}
 
 		flow do
 			@add = button "+ Add question" do
@@ -306,18 +300,14 @@ def add_quiz
 			@name = edit_line(:width => 0.6, :right => 20)
 		end
 
-		#Implement points!
-		flow(:margin => 10) do
-			para "\# of points: "
-			@pts = edit_line(:width => 0.6, :right => 20)
-		end
-
 		id = 0
 		@option = Array.new(50)
 		@out = Array.new(50)
 		@erase = Array.new(50)
 
-		stack(:height => 35, :width => 10, :margin => 20){}
+		#stack(:height => 35, :width => 10, :margin => 20){}
+
+		#IMPLEMENT DELETE BUTTON FOR EVERY QUESTION!
 
 		flow do
 			@add = button "+ Add question" do
