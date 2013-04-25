@@ -14,24 +14,30 @@ def getId(db,name)
 end
 
 def checkLoginStudent(db,name,pass)
-  localPass = db.execute "select password from student where name ='#{name}'"
-  localPass = localPass[0][0]
-  if localPass.to_s == pass.to_s
-    return true
-  else
+  localPass = db.execute "select pass from student where name ='#{name}'"
+  if localPass == []
     return false
+  elsif
+  localPass = localPass[0][0]
+    if localPass == pass
+      return true
+    else
+      return false
+    end
   end
 end
 
 def checkLoginAdmin(db,name,pass)
-  localPass = db.execute "select pass from admin where name ='#{name}' "
-  localPass = localPass[0][0]
-  p localPass
-  p pass
-  if localPass.to_s == pass.to_s
-    return true
-  else
+  localPass = db.execute "select pass from admin where name ='#{name}'"
+  if localPass == []
     return false
+  elsif
+    localPass = localPass[0][0]
+    if localPass == pass
+      return true
+    else
+      return false
+    end
   end
 end
 
