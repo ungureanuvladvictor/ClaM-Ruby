@@ -100,6 +100,146 @@ end
 
 def manage_questions(id)
 
+	#Get info from database somehow
+	stack(:margin => 10) do
+		para link("Back", :click => $lastvisited)
+
+		flow(:margin => 10) do
+			para "Name: "
+			@name = edit_line(:width => 0.6, :right => 20)
+		end
+
+		#Implement points!
+		flow(:margin => 10) do
+			para "\# of points: "
+			@pts = edit_line(:width => 0.6, :right => 20)
+		end
+
+		id = 0
+		@option = Array.new(50)
+		@out = Array.new(50)
+		@erase = Array.new(50)
+
+		stack(:height => 35, :width => 10, :margin => 20){}
+
+		flow do
+			@add = button "+ Add question" do
+
+				id = id + 1
+
+				type = ask "Which type of question?\n[M] Multiple Choice \n[S] Short Answer\n [L] Long Answer"
+
+				if (type == "M" || type == "m")
+					num = ask "How many options?"
+
+					@out[id] = stack(:margin => 10) do
+
+						flow do
+							para "Question \##{id}: "
+							@name = edit_line(:width => 0.6, :right => 20)
+						end
+
+						flow do
+							para "Points: "
+							@points = edit_line(:width => 0.6, :right => 20)
+						end
+
+						n = num.to_i
+						i = 0
+						@option[id] = Array.new(n)
+
+						while i < n
+							flow do
+								para "Option \##{i+1}: "
+								@option[id][i] = edit_line(:width => 0.6, :right => 20)
+
+							end
+							i = i+1
+						end
+
+						flow do
+							para "Correct: "
+							@correct = edit_line(:width => 0.6, :right => 20)
+						end
+
+
+					end
+
+				elsif (type == "S" || type == "s")
+					@out[id] = stack(:margin => 10) do
+						
+						flow do
+							para "Question \##{id}: "
+							@name = edit_line(:width => 0.6, :right => 20)
+						end
+
+						flow do
+							para "Points: "
+							@points = edit_line(:width => 0.6, :right => 20)
+						end
+
+						flow do
+							para "Correct: "
+							@correct = edit_line(:width => 0.6, :right => 20)
+						end
+					end
+				
+				elsif (type == "L" || type == "l")
+					
+					@out[id] = stack(:margin => 10) do
+					
+					flow do
+						para "Question \##{id}: "
+						@name = edit_line(:width => 0.6, :right => 20)
+					end
+
+					flow do
+						para "Points: "
+						@points = edit_line(:width => 0.6, :right => 20)
+					end
+
+					flow do
+						para "Correct: "
+						@correct = edit_box(:width => 0.6, :height => 100, :right => 20)
+					end
+
+					end
+
+				else 
+					alert "Please, specify correct question type!"
+				end	
+
+			end
+
+			@cancel = button "Cancel" do
+				visit "/manage_quizzes"
+			end
+
+			@cancel.style :margin_left => 10
+
+			@submit = button "Submit" do
+				if (id == 0)
+					alert "Please, add at least one question."
+				else
+					# CHECK FOR NUMBER OF POINTS
+					# CHECK IF FIELDS FILLED
+					#write to database (somehow)
+					visit "/manage_quizzes"
+				end
+			end
+
+			@submit.style :margin_left => 10
+		end
+
+		flow do 
+			@erase = button "X Delete" do
+				@out[id].remove
+				id = id-1
+			end
+			@erase.style :width => 80, :left => 244
+
+		end
+	end
 end
 
 # Overall quiz statistics
@@ -169,6 +309,9 @@ def add_quiz
 		end
 
 		id = 0
+		@option = Array.new(50)
+		@out = Array.new(50)
+		@erase = Array.new(50)
 
 		stack(:height => 35, :width => 10, :margin => 20){}
 
@@ -182,7 +325,7 @@ def add_quiz
 				if (type == "M" || type == "m")
 					num = ask "How many options?"
 
-					@out = stack(:margin => 10) do
+					@out[id] = stack(:margin => 10) do
 
 						flow do
 							para "Question \##{id}: "
@@ -195,12 +338,14 @@ def add_quiz
 						end
 
 						n = num.to_i
-						i = 1
+						i = 0
+						@option[id] = Array.new(n)
 
-						while i <= n
+						while i < n
 							flow do
-								para "Option \##{i}: "
-								@option = edit_line(:width => 0.6, :right => 20)
+								para "Option \##{i+1}: "
+								@option[id][i] = edit_line(:width => 0.6, :right => 20)
+
 							end
 							i = i+1
 						end
@@ -210,10 +355,11 @@ def add_quiz
 							@correct = edit_line(:width => 0.6, :right => 20)
 						end
 
+
 					end
 
 				elsif (type == "S" || type == "s")
-					@out = stack(:margin => 10) do
+					@out[id] = stack(:margin => 10) do
 						
 						flow do
 							para "Question \##{id}: "
@@ -233,7 +379,7 @@ def add_quiz
 				
 				elsif (type == "L" || type == "l")
 					
-					@out = stack(:margin => 10) do
+					@out[id] = stack(:margin => 10) do
 					
 					flow do
 						para "Question \##{id}: "
@@ -276,6 +422,15 @@ def add_quiz
 			end
 
 			@submit.style :margin_left => 10
+		end
+
+		flow do 
+			@erase = button "X Delete" do
+				@out[id].remove
+				id = id-1
+			end
+			@erase.style :width => 80, :left => 244
+
 		end
 	end
 
