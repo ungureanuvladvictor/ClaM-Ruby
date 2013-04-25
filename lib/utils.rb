@@ -2,9 +2,8 @@ require 'sqlite3'
 require 'socket'
 require 'timeout'
 
-def getName(db,id)
-  name = db.execute( "select name from student where id = '" + id.to_s + " '" )
-  return name[0][0]
+def getStudentNameByUsername(db, username)
+  return (db.execute "select name from student where username='#{username}'")[0][0]
 end
 
 def getId(db,name)
