@@ -17,7 +17,9 @@ def calc_cheat(a,b)
     end
   end
   ret = counta.to_f/wordsa.count.to_f
-  if wordsa.count<=10
+  if wordsa.count<=5
+    return [ret>0.5,ret]
+  elsif wordsa.count<=10
     return [ret>0.75,ret]
   end
   return [ret>0.5,ret]
