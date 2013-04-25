@@ -62,7 +62,7 @@ def quiz_stats(id)
 
 		para link("Back", :click => $lastvisited)
 
-		caption "Displaying info for Quiz ##{id}"
+		caption "Displaying info for Quiz \##{id}"
 
 		flow do
 			@b21 = button "Delete quiz" do
@@ -78,10 +78,8 @@ def quiz_stats(id)
 		end
 
 		flow do
-			@b23 = button "Manage questions" do
-
-				visit "/manage_questions/##{id}"
-
+			@b23 = button "Manage questions" do	
+				visit "/manage_questions/#{id}"
 			end
 
 			@b24 = button "Rescale" do
@@ -97,6 +95,11 @@ def quiz_stats(id)
 		@table = table(:top => 150, :left => 5, :rows => 8, :headers => [["#",25],["Student",120],["Score",60],["Errors",60],["Ch.F",50]], :items => [[1,"Name1","5","80%",""]],:blk => @function)
 
 	end
+end
+
+
+def manage_questions(id)
+
 end
 
 # Overall quiz statistics
@@ -265,6 +268,8 @@ def add_quiz
 				if (id == 0)
 					alert "Please, add at least one question."
 				else
+					# CHECK FOR NUMBER OF POINTS
+					# CHECK IF FIELDS FILLED
 					#write to database (somehow)
 					visit "/manage_quizzes"
 				end
@@ -272,18 +277,9 @@ def add_quiz
 
 			@submit.style :margin_left => 10
 		end
-
-		#@add.move(0,0)
-		#cancel.move()
-		#@submit.move(100,150)
-
 	end
 
 	#$lastvisited = "/add_quiz"
-
-end
-
-def manage_questions(id)
 
 end
 
