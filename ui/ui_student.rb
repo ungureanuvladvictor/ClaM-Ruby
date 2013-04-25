@@ -120,6 +120,7 @@ def manage_students
 
 		flow do
 			@b31 = button "Add student" do
+				visit "/add_student"
 
 			end
 			
@@ -158,6 +159,58 @@ def manage_students
 end
 
 def add_student
+
+	$lastvisited = "/add_student"
+	b=false
+
+	stack(:margin => 10) do
+
+		para link("Back", :click => "/manage_students")
+
+		flow(:margin_top => 100) do
+			para "Name:"
+			@text = edit_line(:width => 0.6, :right => 20)
+		end
+
+		flow(:margin_top => 30) do
+			para "Username:"
+			@text1 = edit_line(:width => 0.6, :right => 20)
+		end
+
+		flow do
+			para "Password:"
+			@text2 = edit_line(:width => 0.6, :right => 20, :secret => true)
+		end
+
+		flow do
+			@bb = button "Random" do
+				b = true
+				value = "" 
+				8.times{value << ((rand(2)==1?65:97) + rand(25)).chr}
+				@text2.text = value
+			end
+			@bb.style :width => 80, :right => 20, :height => 25, :bottom => 260
+		end
+
+		flow do
+			@cancel = button "Cancel" do
+				visit "/manage_students"
+			end
+
+			@cancel.style :width => 120, :height => 40, :bottom => 120
+
+			@submit = button "Submit" do
+				#alert "Student #{@text.text}, with username #{@text1.text} was generated"
+				if b==true
+					alert "Please write down this password: #{@text2.text}"
+				end
+				#request to database
+				visit "/manage_students"
+			end
+			@submit.style :width => 120, :height => 40, :right => 20, :bottom =>120
+		end
+
+	end
 
 
 end

@@ -5,6 +5,7 @@ class Quiz < Shoes
 url '/quiz/(\d+)', :quiz
 url '/quiz_stats/(\d+)', :quiz_stats
 url '/manage_quizzes', :manage_quizzes
+url '/manage_questions/(\d+)' :manage_questions
 url '/add_quiz', :add_quiz
 
 # Taking quiz
@@ -78,6 +79,8 @@ def quiz_stats(id)
 
 		flow do
 			@b23 = button "Manage questions" do
+
+				visit "/manage_questions/##{id}"
 
 			end
 
@@ -230,6 +233,10 @@ def add_quiz
 	end
 
 	#$lastvisited = "/add_quiz"
+
+end
+
+def manage_questions(id)
 
 end
 
