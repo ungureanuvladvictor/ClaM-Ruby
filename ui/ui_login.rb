@@ -38,20 +38,16 @@
 				return
 			end
 
+			debug $admin
+			debug @username.text
+			debug @password.text
+
 			if (checkLoginAdmin($admin,@username.text,@password.text) == true)
-				alert "Yes!"
-			end
-
-			#log = ask "name = #{@username.text}, pass = #{@password.text}, rememberme = #{@remember.checked?}. Do checking for validity here.\n(s) to log as student, (p) as professor, (q) to reject the data."
-			
-			#do the redirecting according to user's rights
-
-			if (log == "p")
 				visit "/professor_menu"
-			elsif (log == "s")
+			elsif (checkLoginStudent($student,@username.text,@password.text) == true)
 				visit "/student_menu"
-			elsif (log == "q")
-				alert "Username/password is wrong. Please, try again or ask your teacher for assistance."
+			else
+				alert "Invalid credentials."
 			end
 		end
 		@b1.style :width => 200, :margin => 10
