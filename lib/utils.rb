@@ -15,6 +15,7 @@ end
 
 def checkLoginStudent(db,name,pass)
   localPass = db.execute "select pass from student where username ='#{name}'"
+  p name
   if localPass == []
     return false
   elsif
@@ -101,10 +102,15 @@ def getQuizesForStudentId(db,id)
    quizList
 end
 
-def getAvailableQuizesForId(db, id)
-  result = (db.execute "select availablequizes from student where id=#{id}")[0][0]
+def getAvailableQuizesForId(dbStudent, dbQuiz, id)
+  names = Array.new
+  result = (dbStudent.execute "select availablequizes from student where id=#{id}")[0][0]
   unless result == nil then
-    return result.split(" ")
+    partial = result.split(" ")
+    partial.each do |j|
+      names.push(getQuizName(dbQuiz, j.to_i))
+    end
+    return names
   else
     return []
   end
