@@ -105,7 +105,7 @@ end
 def manage_questions(id)
 
 	#Get info from database somehow
-	stack(:margin => 10) do
+	stack(:margin => 5) do
 		para link("Back", :click => $lastvisited)
 
 		flow(:margin => 10) do
@@ -121,7 +121,7 @@ def manage_questions(id)
 		#stack(:height => 35, :width => 10, :margin => 20){}
 
 		flow do
-			@add = button "+ Add question" do
+			@add = button "+ Add" do
 
 				id = id + 1
 
@@ -209,13 +209,20 @@ def manage_questions(id)
 
 			end
 
+			@erase = button "- Remove" do
+				@out[id].remove
+				id = id-1
+			end
+
+			@erase.style :margin_left => 5
+
 			@cancel = button "Cancel" do
 				visit "/manage_quizzes"
 			end
 
-			@cancel.style :margin_left => 10
+			@cancel.style :margin_left => 5
 
-			@submit = button "Submit" do
+			@submit = button "Submit!" do
 				if (id == 0)
 					alert "Please, add at least one question."
 				else
@@ -226,16 +233,7 @@ def manage_questions(id)
 				end
 			end
 
-			@submit.style :margin_left => 10
-		end
-
-		flow do 
-			@erase = button "X Delete" do
-				@out[id].remove
-				id = id-1
-			end
-			@erase.style :width => 80, :left => 244
-
+			@submit.style :margin_left => 5
 		end
 	end
 end
@@ -292,7 +290,7 @@ end
 #Adding new quiz
 def add_quiz
 
-	stack(:margin => 10) do
+	stack(:margin => 5) do
 		para link("Back", :click => $lastvisited)
 
 		flow(:margin => 10) do
@@ -303,14 +301,13 @@ def add_quiz
 		id = 0
 		@option = Array.new(50)
 		@out = Array.new(50)
-		@erase = Array.new(50)
 
 		#stack(:height => 35, :width => 10, :margin => 20){}
 
 		#IMPLEMENT DELETE BUTTON FOR EVERY QUESTION!
 
 		flow do
-			@add = button "+ Add question" do
+			@add = button "+ Add" do
 
 				id = id + 1
 
@@ -398,13 +395,20 @@ def add_quiz
 
 			end
 
+			@erase = button "- Remove" do
+				@out[id].remove
+				id = id-1
+			end
+
+			@erase.style :margin_left => 5
+
 			@cancel = button "Cancel" do
 				visit "/manage_quizzes"
 			end
 
-			@cancel.style :margin_left => 10
+			@cancel.style :margin_left => 5
 
-			@submit = button "Submit" do
+			@submit = button "Submit!" do
 				if (id == 0)
 					alert "Please, add at least one question."
 				else
@@ -415,16 +419,7 @@ def add_quiz
 				end
 			end
 
-			@submit.style :margin_left => 10
-		end
-
-		flow do 
-			@erase = button "X Delete" do
-				@out[id].remove
-				id = id-1
-			end
-			@erase.style :width => 80, :left => 244
-
+			@submit.style :margin_left => 5
 		end
 	end
 
