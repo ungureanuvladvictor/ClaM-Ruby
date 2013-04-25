@@ -66,7 +66,8 @@ def quiz_stats(id)
 
 		flow do
 			@b21 = button "Delete quiz" do
-
+				#Delete quiz here
+				visit $lastvisited
 			end
 
 			@b22 = button "Print results" do
@@ -79,11 +80,14 @@ def quiz_stats(id)
 
 		flow do
 			@b23 = button "Manage questions" do	
+				$lastvisited = "/quiz_stats"
 				visit "/manage_questions/#{id}"
 			end
 
 			@b24 = button "Rescale" do
-
+				resc = ask "How much percent would you like to add to everybody? (negative numbers to substract)"
+				#Do magic
+				visit $lastvisited
 			end
 
 			@b23.style :width => 160

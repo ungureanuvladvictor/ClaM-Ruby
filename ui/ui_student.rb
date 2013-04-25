@@ -52,11 +52,22 @@ def student_stats(name)
 
 		flow do
 			@b21 = button "Reset password" do
-				alert "New password: -----"
+				newpass = ask "Please, type the new password or enter <rand> for randomly generated one."
+
+				if (newpass == "<rand>")
+					b = true
+					value = "" 
+					8.times{value << ((rand(2)==1?65:97) + rand(25)).chr}
+					newpass = value
+					alert "Please write down this password: #{newpass}"
+				end
+
+				# Save pwd to db
 			end
 
 			@b22 = button "Delete student" do
-
+				# Delete from db
+				visit $lastvisited
 			end
 
 			@b21.style :width => 160
@@ -110,6 +121,7 @@ def student_stats(name)
 end
 
 def manage_students
+
 	$lastvisited = "/manage_students"
 
 	stack(:margin => 10) do
@@ -160,8 +172,8 @@ end
 
 def add_student
 
-	$lastvisited = "/add_student"
-	b=false
+	#$lastvisited = "/add_student"
+	b = false
 
 	stack(:margin => 10) do
 
@@ -201,11 +213,11 @@ def add_student
 
 			@submit = button "Submit" do
 				#alert "Student #{@text.text}, with username #{@text1.text} was generated"
-				if b==true
+				if (b == true)
 					alert "Please write down this password: #{@text2.text}"
 				end
 				#request to database
-				visit "/manage_students"
+				visit $lastvisited
 			end
 			@submit.style :width => 120, :height => 40, :right => 20, :bottom =>120
 		end
