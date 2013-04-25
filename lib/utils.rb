@@ -69,12 +69,10 @@ def getQuizzesTaken(dbstudent, dbquiz, id)
   quizzDates = getDatesForStudentId(dbstudent,id)
 
   quizzesId = getQuizesForStudentId(dbstudent,id)
-
   getScoresForStundetId(dbstudent,id).each do |tuple|
     quizzScores.push((tuple.split(" "))[1])
   end
-
-  quizzesId.each do |idQuiz|
+   quizzesId.each do |idQuiz|
     quizzNames.push(getQuizName(dbquiz,idQuiz))
   end
 
@@ -87,7 +85,7 @@ def getQuizzesTaken(dbstudent, dbquiz, id)
     partial += quizzDates[i].to_s
     partial += " "
     partial += quizzScores[i].to_s
-    quiz.push(partial)
+    quiz.push(partial.split(" "))
   end
   quiz
 end
