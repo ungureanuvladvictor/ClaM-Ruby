@@ -16,7 +16,7 @@ end
 def checkLoginStudent(db,name,pass)
   localPass = db.execute "select password from student where name ='#{name}'"
   localPass = localPass[0][0]
-  if localPass == pass
+  if localPass.to_s == pass.to_s
     return true
   else
     return false
@@ -28,7 +28,7 @@ def checkLoginAdmin(db,name,pass)
   localPass = localPass[0][0]
   p localPass
   p pass
-  if localPass == pass
+  if localPass.to_s == pass.to_s
     return true
   else
     return false
