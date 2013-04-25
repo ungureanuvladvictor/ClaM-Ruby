@@ -213,6 +213,7 @@ def systemInit(address, port)
   requestFile(address, port, "Student.db")
   requestFile(address, port, "Question.db")
   requestFile(address, port, "Quiz.db")
+  requestFile(address, port, "Admin.db")
 end
 
 def executeStudentUpdate(address, port, command)
