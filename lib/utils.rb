@@ -14,7 +14,7 @@ def getId(db,name)
 end
 
 def checkLoginStudent(db,name,pass)
-  localPass = db.execute "select pass from student where name ='#{name}'"
+  localPass = db.execute "select pass from student where username ='#{name}'"
   if localPass == []
     return false
   elsif
@@ -28,7 +28,7 @@ def checkLoginStudent(db,name,pass)
 end
 
 def checkLoginAdmin(db,name,pass)
-  localPass = db.execute "select pass from admin where name ='#{name}'"
+  localPass = db.execute "select pass from admin where username ='#{name}'"
   if localPass == []
     return false
   elsif
