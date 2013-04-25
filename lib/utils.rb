@@ -24,7 +24,7 @@ def checkLoginStudent(db,name,pass)
 end
 
 def checkLoginAdmin(db,name,pass)
-  localPass = db.execute "select password from admin where name = " +name
+  localPass = db.execute "select pass from admin where name = " +name
   localPass = localPass[0][0]
   if localPass == pass
     return true
