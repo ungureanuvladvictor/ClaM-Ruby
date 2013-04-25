@@ -1,6 +1,8 @@
+require '../lib/cheat_algorithm'
 require 'sqlite3'
 require 'socket'
 require 'timeout'
+
 
 def getStudentNameByUsername(db, username)
   return (db.execute "select name from student where username='#{username}'")[0][0]

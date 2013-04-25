@@ -7,6 +7,15 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
+  vlad = Array.new(50)
+  vlad.push(1,2,3,4,5,6)
+  i=0
+  vlad.each do |j|
+    if !j.nil?
+      i = i+ 1
+    end
+  end
+  p i
   #p checkLoginAdmin(admin, "test","test")
   #p checkLoginStudent(student,"alexuser","alexpass")
   #p getAvailableQuizesForId(student,quiz,getId(student,'alexuser'))

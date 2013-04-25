@@ -1,6 +1,6 @@
 def calc_cheat(a,b)
-  wordsa = a.split(/\.?\s+/)
-  wordsb = b.split(/\.?\s+/)
+  wordsa = a.downcase.split(/\.?\s+/)
+  wordsb = b.downcase.split(/\.?\s+/)
   if wordsa.count>wordsb.count
     return calc_cheat(b,a)
   end
