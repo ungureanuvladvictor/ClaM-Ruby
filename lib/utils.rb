@@ -54,7 +54,12 @@ def getQuizName(db,id)
 end
 
 def getQuizIdForName(db, name)
-  return (db.execute "select id from quiz where name='#{name}'")[0][0]
+  result = (db.execute "select id from quiz where name='#{name}'")
+  if result == []
+    return 0
+  else
+    return result[0][0]
+  end
 end
 
 def getQuizzesTaken(dbstudent, dbquiz, id)
