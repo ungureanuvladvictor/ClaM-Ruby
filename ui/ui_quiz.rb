@@ -181,23 +181,29 @@ def add_quiz
 
 					@out = stack(:margin => 10) do
 
-						para "Question \##{id}: "
-						@name[id] = edit_line(:width => 0.6, :right => 20)
+						flow do
+							para "Question \##{id}: "
+							@name = edit_line(:width => 0.6, :right => 20)
+						end
 
 						flow do
-							para "Points \##{id}: "
+							para "Points: "
 							@points = edit_line(:width => 0.6, :right => 20)
 						end
 
-						for i in (1..5)
+						n = num.to_i
+						i = 1
+
+						while i <= n
 							flow do
 								para "Option \##{i}: "
 								@option = edit_line(:width => 0.6, :right => 20)
 							end
+							i = i+1
 						end
 
 						flow do
-							para "Correct \#: "
+							para "Correct: "
 							@correct = edit_line(:width => 0.6, :right => 20)
 						end
 
