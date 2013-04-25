@@ -1,3 +1,5 @@
+require '../lib/utils.rb'
+
 require 'ui_login'
 require 'ui_student'
 require 'ui_professor'

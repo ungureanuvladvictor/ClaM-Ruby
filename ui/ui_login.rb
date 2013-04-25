@@ -5,6 +5,12 @@
  def login
  	$lastvisited = "/"
 
+ 	systemInit("192.168.88.212",2000)
+ 	$quiz = SQLite3::Database.open 'Quiz.db'
+	$question = SQLite3::Database.open 'Question.db'
+	$student = SQLite3::Database.open 'Student.db'
+	$admin = SQLite3::Database.open 'Admin.db'
+
 	stack(:margin => 10) do
 		para ""
 		tagline "Welcome to CLaM!"
@@ -27,7 +33,16 @@
 			$name = @username.text
 			#check username and password here
 
-			log = ask "name = #{@username.text}, pass = #{@password.text}, rememberme = #{@remember.checked?}. Do checking for validity here.\n(s) to log as student, (p) as professor, (q) to reject the data."
+			if (@username.text == "" || @password.text == "")
+				alert "Incomplete!"
+				return
+			end
+
+			if (checkLoginAdmin($admin,@username.text,@password.text) == true)
+				alert "Yes!"
+			end
+
+			#log = ask "name = #{@username.text}, pass = #{@password.text}, rememberme = #{@remember.checked?}. Do checking for validity here.\n(s) to log as student, (p) as professor, (q) to reject the data."
 			
 			#do the redirecting according to user's rights
 
