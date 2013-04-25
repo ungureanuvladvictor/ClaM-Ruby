@@ -16,13 +16,17 @@ def student_menu
 		para link("Logout", :click => '/')
 		tagline "Welcome back, #{$name} !"
 		caption "Available quizzes:"
-		@choose = list_box :items => ["1","2","3"]
+
+		id = getId($student,$name)
+		quiz = getAvailableQuizesForId($student,$quiz,id)
+
+		@choose = list_box :items => quiz
 
 		@b1 = button "Take a quiz!" do
 			if (@choose.text == nil)
 				alert "Please, pick a quiz!"
 			else
-				id = @choose.text
+				id = getQuizIdForName($quiz,@choose.text)
 				alert "/quiz/#{id}"
 				visit "/quiz/#{id}"
 			end

@@ -38,10 +38,6 @@
 				return
 			end
 
-			debug $admin
-			debug @username.text
-			debug @password.text
-
 			if (checkLoginAdmin($admin,@username.text,@password.text) == true)
 				visit "/professor_menu"
 			elsif (checkLoginStudent($student,@username.text,@password.text) == true)
