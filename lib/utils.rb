@@ -296,3 +296,7 @@ def getLatestQuizzes(db, number)
     p result
 
 end
+
+def deleteAllStudents(db)
+    db.execute "delete from student"
+end
