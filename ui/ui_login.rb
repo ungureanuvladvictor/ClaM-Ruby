@@ -5,7 +5,7 @@
  def login
  	$lastvisited = "/"
 
- 	systemInit("192.168.88.212",2000)
+ 	systemInit("localhost",2000)
  	$quiz = SQLite3::Database.open 'Quiz.db'
 	$question = SQLite3::Database.open 'Question.db'
 	$student = SQLite3::Database.open 'Student.db'

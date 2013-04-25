@@ -14,7 +14,10 @@ def student_menu
 
 	stack(:margin => 10) do
 		para link("Logout", :click => '/')
-		tagline "Welcome back, #{$name} !"
+
+		fname = getStudentNameByUsername($student, $name)
+
+		tagline "Welcome back, #{fname} !"
 		caption "Available quizzes:"
 
 		id = getId($student,$name)
@@ -40,7 +43,9 @@ def student_menu
 
 		@function = Proc.new {}
 
-		@table = table(:top => 240, :left => 10, :rows => 5, :headers => [["#",25], ["Quiz",135], ["Date",100], ["Grade",60]], :items => [[1,"Quizname1","11/11/11","100"],[2,"Quizname2","11/11/11","100"],[3,"Quizname3","11/11/11","100"],[4,"Quizname4","11/11/11","100"],[5,"Quizname5","11/11/11","100"]], :blk => @function)
+		res = getQuizzesTaken($student, $quiz, id)
+
+		@table = table(:top => 240, :left => 10, :rows => res.size, :headers => [["#",25], ["Quiz",135], ["Date",100], ["Grade",60]], :items => res, :blk => @function)
 
 	end
 end
