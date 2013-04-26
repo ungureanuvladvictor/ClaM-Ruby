@@ -614,7 +614,7 @@ def rescaleQuizId(dbQuiz,dbStudent,quizId, grade)
   end
 end
 
-def rescaleQuizForStudentId(dbStudent,studentId,quizId,grade)
+def rescaleQuizForStudentId(dbStudent, studentId, quizId, grade)
     result = dbStudent.execute "select scores from student where id=#{studentId}"
     if result[0][0] == nil
       return []
@@ -638,7 +638,7 @@ def rescaleQuizForStudentId(dbStudent,studentId,quizId,grade)
     end
 end
 
-def deleteAllQuizzes(dbQuiz,dbStudent)
+def deleteAllQuizzes(dbQuiz, dbStudent)
     dbQuiz.execute "delete from quiz"
     executeQuizzUpdate($host,$post,"delete from quiz")
     result = dbStudent.execute "select id from student"
@@ -650,5 +650,15 @@ def deleteAllQuizzes(dbQuiz,dbStudent)
        query = "update student set scores='', dates='',availablequizes='' where id=#{id}"
        dbStudent.execute query
        executeStudentUpdate($host,$port,query)
+       sleep(0.1)
      end
+end
+
+def deleteQuizWithId(dbQuiz, dbStudent, quizId)
+    #query = "delete from quiz where id=#{quizId}"
+    #dbQuiz.execute query
+    #executeQuizzUpdate($host,$port,query)
+    query = "select id, scores,availablequizes,dates from student"
+    result = dbStudent.execute query
+    p result
 end
