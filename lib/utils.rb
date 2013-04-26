@@ -420,7 +420,7 @@ def getStudentsAvgGradeForQuizId(dbStudent, quizId)
   if number.zero? || avg.zero?
     return 0
   else
-    return avg/number.to_f
+    return (avg/number.to_f).round(2)
   end
 end
 
