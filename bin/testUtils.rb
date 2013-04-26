@@ -7,8 +7,9 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-
-  submitQuiz(student, 4, 3, 2, "da")
+   p  quizDataForStudentId(student, quiz,1)
+   #quizesForStudent(student,quiz,2)
+  #submitQuiz(student, 4, 3, 2, "da")
 
   #addQuiz(quiz,student,"vlad","1 2 3")
 

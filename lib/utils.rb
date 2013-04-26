@@ -523,13 +523,12 @@ def submitQuiz(dbStudent, studentId, quizId, quizResult, date)
   return "update student set scores='#{localScores},', dates='#{dates},', availablequizes='#{finalQuizzes}' where id=#{studentId}"
 end
 
-
 def getQuizInfo(dbStudent, dbQuiz, quizId)
     finalResult = Array.new
     studentIds = dbStudent.execute "select id from student"
     studentIds.each do |student|
       student = student[0]
-      result = quizDataForStudentId(dbStudent,quizId,student)
+      result = magic(dbStudent,quizId,student)
       if result != []
         finalResult.push(result)
         end
@@ -537,7 +536,27 @@ def getQuizInfo(dbStudent, dbQuiz, quizId)
     p finalResult
 end
 
-def quizDataForStudentId(dbStudent, quizId, studentId)
+def magic(dbStudent, quizId, studentId)
+  finalResult = Array.new
+  result = dbStudent.execute "select scores,dates,name from student where id=#{studentId}"
+  if result[0][0] == nil
+    return []
+  end
+  scores = result[0][0].split","
+  dates = result[0][1].split","
+  name = result[0][2]
+  i = 0
+  scores.each do |quiz|
+    id = quiz.split(" ")
+    if id[0].to_s == quizId.to_s
+      finalResult.push(studentId,name,dates[i],id[1])
+    end
+    i = i+1
+  end
+  return finalResult
+end
+
+def quizDataForStudentId(dbStudent, dbQuiz, studentId)
     finalResult = Array.new
     result = dbStudent.execute "select scores,dates,name from student where id=#{studentId}"
     if result[0][0] == nil
@@ -548,11 +567,17 @@ def quizDataForStudentId(dbStudent, quizId, studentId)
     name = result[0][2]
     i = 0
     scores.each do |quiz|
-      id = quiz.split(" ")
-      if id[0].to_s == quizId.to_s
-        finalResult.push(studentId,name,dates[i],id[1])
-      end
+      id = quiz.split(" ")[0]
+      score = quiz.split(" ")[1]
+      name = getQuizName(dbQuiz,id)
+      date = dates[i]
       i = i+1
-      end
-    return finalResult
+      finalResult.push([id,name,date,score])
+    end
+  finalResult
+end
+
+def quizesForStudent(dbStudent,dbQuiz,studentId)
+  query  = dbStudent.execute "select scores,dates from student"
+  p query
 end
