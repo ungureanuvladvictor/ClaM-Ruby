@@ -260,7 +260,8 @@ def requestFile(address, port, file)
     sock = begin
       Timeout::timeout( 1 ) { TCPSocket.open( address, port ) }
     rescue StandardError, RuntimeError => ex
-      raise "cannot connect to server: #{ex}"
+      return false
+      #raise "cannot connect to server: #{ex}"
     end
 
     sock.write( "#{file}\r\n" )
@@ -276,13 +277,14 @@ def requestFile(address, port, file)
     fileToWrite.print(response)
     fileToWrite.close
     sock.close
+  return true
 end
 
 def systemInit(address, port)
-  requestFile(address, port, "Student.db")
-  requestFile(address, port, "Question.db")
-  requestFile(address, port, "Quiz.db")
-  requestFile(address, port, "Admin.db")
+  if requestFile(address, port, "Student.db") ==false || requestFile(address, port, "Question.db") == false ||requestFile(address, port, "Quiz.db") == false ||requestFile(address, port, "Admin.db")
+    return false
+  end
+  return true
 end
 
 def executeStudentUpdate(address, port, command)
@@ -669,6 +671,7 @@ def changePass(dbStudent, studentId, pass)
     dbStudent.execute query
     executeStudentUpdate($host, $port, query)
 end
+
 =begin
 def deleteQuizWithId(dbQuiz, dbStudent, quizId)
     #query = "delete from quiz where id=#{quizId}"

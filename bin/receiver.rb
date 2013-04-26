@@ -1,11 +1,12 @@
 require '../lib/utils'
 
 #requestFile('localhost', 2000, 'Quiz.db')
-=begin
+
 sock = begin
   Timeout::timeout( 1 ) { TCPSocket.open( '127.0.0.1', 2000 ) }
 rescue StandardError, RuntimeError => ex
-  raise "cannot connect to server: #{ex}"
+  #raise "cannot connect to server: #{ex}"
+  return false
 end
 
 sock.write( "s select * from student\r\n" )
@@ -24,4 +25,3 @@ p response
 sock.close
 
 #systemInit('localhost',2000)
-=end
