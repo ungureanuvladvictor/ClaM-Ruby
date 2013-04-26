@@ -48,7 +48,10 @@ def checkLoginAdmin(db,name,pass)
 end
 
 def addStudent(dbstudent, dbquiz, name, username, pass)
-  studentId = (dbstudent.execute "select max(id) from student")[0][0]
+  result = (dbstudent.execute "select max(id) from student")
+  if result.nil?
+     result = 0
+  end
   quizzes = (dbquiz.execute "select id from quiz")
   finalQuizzes = Array.new
   quizzes.each do |quizId|
