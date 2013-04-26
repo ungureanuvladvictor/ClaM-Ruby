@@ -682,17 +682,26 @@ def changePass(dbStudent, studentId, pass)
 end
 
 
-def deleteQuizWithId(dbQuiz, dbStudent, quizId)
+def deleteQuizWithId(dbQuiz, dbStudent, dbQuestion, quizId)
     #query = "delete from quiz where id=#{quizId}"
     #dbQuiz.execute query
     #executeQuizzUpdate($host,$port,query)
+
+  questions =  dbQuiz.execute "select questions from quiz where id=#{quizId}"
+    questions = questions[0][0].split(" ")
+    questions.each do |question|
+      q = "delete from question where id=#{question}"
+      #dbQuestion.execute q
+      #executeQuestionUpdate($host, $port, q)
+    end
+
     query = "select id, scores,availablequizes,dates from student"
     result = dbStudent.execute query
     ids = Array.new
     scores = Array.new
     result.each do |student|
       ids.push student[0]
-      p student[3].split","
+     # p student[3].split","
 
     end
     result.each do |student|
@@ -700,6 +709,6 @@ def deleteQuizWithId(dbQuiz, dbStudent, quizId)
         scores.push pair
       end
     end
-    p ids
-    p scores
+    #p ids
+    #p scores
 end
