@@ -1,13 +1,17 @@
 require '../lib/utils.rb'
 
 begin
-  #systemInit('localhost',2000)
+  systemInit('localhost',2000)
   quiz = SQLite3::Database.open 'Quiz.db'
   question = SQLite3::Database.open 'Question.db'
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-   addStudent(student, quiz, "filip", "fp", "fp")
+  # getStudentsAvgGradeForQuizId(student,1)
+
+   #p getFullQuizzes(quiz, student)
+  #p getStudentNrWithQuizId(student,1)
+  # addStudent(student, quiz, "filip", "fp", "fp")
   #p getFullStudents(student)
   #deleteAllStudents(student)
   #getLatestQuizzes(quiz,3)

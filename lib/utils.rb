@@ -334,3 +334,70 @@ def getFullStudents(db)
     end
     return finalStudents
 end
+
+def getFullQuizzes(dbQuiz, dbStudent)
+  finalQuiz = Array.new
+  result = dbQuiz.execute "select id,name from quiz"
+  if result[0][0] == nil
+    return nil
+  else
+    result.each do |quiz|
+      quizId = quiz[0]
+      quizName = quiz[1]
+      quizTaken = getStudentNrWithQuizId(dbStudent,quizId)
+      quizAvg = getStudentsAvgGradeForQuizId(dbStudent,quizId)
+      finalQuiz.push([quizId,quizName,quizTaken,quizAvg])
+    end
+  end
+  return finalQuiz
+end
+
+def getStudentNrWithQuizId(dbStudent, quizId)
+  number = 0
+  result = dbStudent.execute "select scores from student"
+  if result[0][0] == nil
+    return nil
+  else
+    scores = Array.new
+    result.each do |score|
+        scores.push(score[0])
+    end
+    scores.delete("")
+    scores.each do |score|
+      score.split(',').each do |quiz|
+        if quiz.split(" ")[0] == quizId.to_s
+          number = number +1
+        end
+      end
+    end
+  end
+  return  number
+end
+
+def getStudentsAvgGradeForQuizId(dbStudent, quizId)
+  number = 0
+  avg = 0
+  result = dbStudent.execute "select scores from student"
+  if result[0][0] == nil
+    return nil
+  else
+    scores = Array.new
+    result.each do |score|
+      scores.push(score[0])
+    end
+    scores.delete("")
+    scores.each do |score|
+      score.split(',').each do |quiz|
+        if quiz.split(" ")[0] == quizId.to_s
+          number = number +1
+          avg = avg + quiz.split(" ")[1].to_i
+        end
+      end
+    end
+  end
+  if number.zero? || avg.zero?
+    return 0
+  else
+    return avg/number
+  end
+end
