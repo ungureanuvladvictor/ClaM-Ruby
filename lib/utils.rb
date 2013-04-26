@@ -689,7 +689,7 @@ def deleteQuizWithId(dbQuiz, dbStudent, dbQuestion, quizId)
 
   questions =  dbQuiz.execute "select questions from quiz where id=#{quizId}"
     p questions
-    questions = questions[0][0].split(" ")
+    #questions = questions[0][0].split(" ")
     questions.each do |question|
       q = "delete from question where id=#{question}"
       dbQuestion.execute q
