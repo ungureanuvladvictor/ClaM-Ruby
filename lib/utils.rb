@@ -390,7 +390,7 @@ def getStudentsAvgGradeForQuizId(dbStudent, quizId)
       score.split(',').each do |quiz|
         if quiz.split(" ")[0] == quizId.to_s
           number = number +1
-          avg = avg + quiz.split(" ")[1].to_i
+          avg = avg + quiz.split(" ")[1].to_f
         end
       end
     end
@@ -398,6 +398,6 @@ def getStudentsAvgGradeForQuizId(dbStudent, quizId)
   if number.zero? || avg.zero?
     return 0
   else
-    return avg/number
+    return avg/number.to_f
   end
 end
