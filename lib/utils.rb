@@ -587,3 +587,29 @@ def deleteStudentWithId(dbStudent, studentId)
   dbStudent.execute query
   return query
 end
+
+def rescaleQuizId(dbQuiz,dbStudent,quizId, grade)
+  finalresult = Array.new
+  query = dbStudent.execute "select scores,id from student"
+  result = Array.new
+  query.each do |quiz|
+    if quiz[0] != nil
+      result.push(quiz[0])
+    end
+  end
+  j = 0
+  result.each do |quiz|
+    quiz = quiz.split(",")
+    quiz.each do |i|
+      i = i.split(" ")
+      #p i
+      if i[0].to_s == quizId.to_s
+        grd =  i[1].to_i + grade
+        finalresult.push([i[0],grd].join(" "))
+      end
+    end
+    dbStudent.execute "update student set scores='#{finalresult.join(",")},' where id=#{query[j][1]}"
+    executeStudentUpdate($host,$port,"update student set scores='#{finalresult.join(",")},' where id=#{query[j][1]}")
+    j = j+1
+  end
+end
