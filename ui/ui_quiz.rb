@@ -408,8 +408,9 @@ def manage_questions(qid)
 				#create quiz with ids
 				id_string = ids.join(" ")
 				cmd = addQuiz($quiz, $student, @name_q.text, id_string)
-
 				executeQuizzUpdate($host,$port,cmd)
+
+				
 
 				visit "/manage_quizzes"
 			

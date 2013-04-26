@@ -37,7 +37,7 @@ def student_menu
 		@choose.style :width => 1.0
 		@b1.style :displace_left => 145, :width => 200
 
-		para ""
+		#para ""
 		caption "Last results:"
 
 		@function = Proc.new {}

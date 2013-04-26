@@ -13,12 +13,12 @@
 		flow(:margin => 10) do
 			para "Login: "
 			@username = edit_line(:width => 0.6, :right => 20)
-			@username.text = "test"
+			#@username.text = "test"
 		end
 		flow(:margin => 10) do
 			para "Password: "
 			@password = edit_line(:width => 0.6, :right => 20, :secret => true)
-			@password.text = "test"
+			#@password.text = "test"
 		end
 		flow(:margin => 10) do
 			@remember = check
@@ -41,9 +41,9 @@
 
 			if (!systemInit($host,$port))
 				alert "Can not connect to server!"
-				return
+				break
 			end
-			
+
  			$quiz = SQLite3::Database.open 'Quiz.db'
 			$question = SQLite3::Database.open 'Question.db'
 			$student = SQLite3::Database.open 'Student.db'
