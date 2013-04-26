@@ -281,8 +281,15 @@ def requestFile(address, port, file)
 end
 
 def systemInit(address, port)
-  if requestFile(address, port, "Student.db") ==false || requestFile(address, port, "Question.db") == false ||requestFile(address, port, "Quiz.db") == false ||requestFile(address, port, "Admin.db")
-    return false
+  bool = Array.new
+  bool.push requestFile(address, port, "Student.db")
+  bool.push requestFile(address, port, "Question.db")
+  bool.push requestFile(address, port, "Quiz.db")
+  bool.push requestFile(address, port, "Admin.db")
+  bool.each do |val|
+    if val == false
+      return false
+    end
   end
   return true
 end
