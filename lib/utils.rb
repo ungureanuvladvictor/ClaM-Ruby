@@ -408,7 +408,14 @@ end
 
 def getStudentNrWithQuizId(dbStudent, quizId)
   number = 0
+  me = Array.new
   result = dbStudent.execute "select scores from student"
+  result.each do |test|
+    if test != [nil]
+        me.push(test)
+    end
+  end
+  result = me
   if result[0][0] == nil
     return nil
   else

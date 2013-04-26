@@ -6,7 +6,7 @@ begin
   question = SQLite3::Database.open 'Question.db'
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
-addQuestion(question,"vlad",1,"vlad//vlad//vlad","vlad",23)
+#addQuestion(question,"vlad",1,"vlad//vlad//vlad","vlad",23)
     #getQuizInfo(student,quiz,2)
     #quizDataForStudentId(student,2,1)
    # getQuizzesTaken(student,quiz,4)
@@ -14,7 +14,7 @@ addQuestion(question,"vlad",1,"vlad//vlad//vlad","vlad",23)
    #p submitQuiz(student, 4, 1, 100,"11.03.2013")
   # getStudentsAvgGradeForQuizId(student,1)
   #p getFullQuizzes(quiz, student)
-  #p getStudentNrWithQuizId(student,1)
+ # p getStudentNrWithQuizId(student,4)
   # addStudent(student, quiz, "filip", "fp", "fp")
   #p getFullStudents(student)
   #deleteAllStudents(student)
