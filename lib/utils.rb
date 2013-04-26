@@ -597,7 +597,7 @@ def quizDataForStudentId(dbStudent, dbQuiz, studentId)
     i = 0
     scores.each do |quiz|
       id = quiz.split(" ")[0]
-      score = quiz.split(" ")[1]
+      score = quiz.split(" ")[1].to_f.round(2)
       name = getQuizName(dbQuiz,id)
       date = dates[i]
       i = i+1
@@ -635,8 +635,9 @@ def rescaleQuizId(dbQuiz,dbStudent,quizId, grade)
       i = i.split(" ")
       if i[0].to_i == quizId.to_i
         grd =  i[1].to_f + grade
-        p grd
-        p query[j][1]
+        grd = grd.round(2)
+        #p grd
+        #p query[j][1]
         finalresult.push([i[0],grd].join(" "))
       else
         finalresult.push([i[0],i[1]].join(" "))
@@ -665,7 +666,7 @@ def rescaleQuizForStudentId(dbStudent, studentId, quizId, grade)
       result.each do |quiz|
         quiz = quiz.split(" ")
         if quiz[0].to_s == quizId.to_s
-          grd = grade
+          grd = grade.to_f.round(2)
           finalResult.push("#{quiz[0]} #{grd}")
         else
           finalResult.push("#{quiz[0]} #{quiz[1]}")

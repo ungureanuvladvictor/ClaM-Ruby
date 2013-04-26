@@ -129,7 +129,7 @@ def student_stats(id)
 								else
 									q_id = idz[namz.index(@choise.text)]
 
-									cmd = rescaleQuizForStudentId($student, id, q_id, @in.text.to_i)
+									cmd = rescaleQuizForStudentId($student, id, q_id, @in.text.to_f.round(2))
 
 									if (cmd != [])
 										executeStudentUpdate($host,$port,cmd)
