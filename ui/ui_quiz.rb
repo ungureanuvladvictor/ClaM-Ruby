@@ -30,26 +30,96 @@ def quiz(id)
 			end
 		end
 
+		@choose = Array.new(50)
 
 		#Feed with quiz questions
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
-		caption "DERP"
+		@qu = getFullQuestionsForQuizWithId($quiz, $question, id)
+		#[["Name",45,0,"Answer",["Bla","Bla","Bla","Bla","Bla"]]]
 
+		i = 0
+		@qu.each do |qi|
+			i = i+1
+			@q_name = qi[0]
+			@q_pts = qi[1]
+			@q_type = qi[2]
+			@q_correct = qi[3]
+			@q_answer = qi[4]
+
+			if (@q_type == 0)
+				k = 0
+				para "Question \##{i}: #{@q_name} (#{@q_pts})"
+				@choose[i] = Array.new(50)
+
+				flow do
+					while k < @q_answer.size
+						@choose[i][k] = radio; para "#{@q_answer[k]}\n"
+						k = k+1
+					end
+				end
+
+			elsif (@q_type == 1)
+				para "Question \##{i}: #{@q_name} (#{@q_pts})"
+				@choose[i] = edit_line(:width => 0.6, :right => 20)
+
+			elsif (@q_type == 2)
+				para "Question \##{i}: #{@q_name} (#{@q_pts})"
+				@choose[i] = edit_box(:width => 0.6, :height => 100, :right => 20)
+			else
+				debug "Wrong question type, != 0/1/2, ignoring."
+			end	
+
+		end
+
+		stack(:width => 10, :margin => 10)
 		button ("Submit!"){submit}
 	end
 end
 
 def submit
-	alert "Quiz submitted!"
+	
+	answ = Array.new(50)
+	sum = 0
+
+	debug @choose
+
+	for i in 1..50
+		if (@choose[i].nil?)
+			break
+		elsif (@choose[i].class == Shoes::EditLine || @choose[i].class == Shoes::EditBox)
+			answ[i] = @choose[i].text
+		else
+			for k in 0..49
+				if (@choose[i][k].nil?)
+					break
+				else
+					if (@choose[i][k].checked?)
+						answ[i] = @q_answer[k]
+					end
+				end
+			end
+		end
+
+		debug answ[i]
+=begin		
+		@q_name = @qu[i-1][0]
+		@q_pts = @qu[i-1][1]
+		@q_type = @qu[i-1][2]
+		@q_correct = @qu[i-1][3]
+		@q_answer = @qu[i-1][4]
+
+		debug "My debug: "
+		debug answ[i]
+		debug @q_correct
+		#debug calc_cheat(answ[i],@q_correct)[1]
+
+		if (calc_cheat(answ[i],@q_correct)[1] > 0.75)
+			sum = sum + @q_pts_to.i
+		end
+=end
+	end
+
+	debug sum
+
 	visit "/student_menu"
 end
 
@@ -115,8 +185,6 @@ def manage_questions(id)
 		@out = Array.new(50)
 
 		#stack(:height => 35, :width => 10, :margin => 20){}
-
-		#IMPLEMENT DELETE BUTTON FOR EVERY QUESTION!
 
 		flow do
 			@add = button "+ Add" do
@@ -321,8 +389,6 @@ def add_quiz
 		@out = Array.new(50)
 
 		#stack(:height => 35, :width => 10, :margin => 20){}
-
-		#IMPLEMENT DELETE BUTTON FOR EVERY QUESTION!
 
 		flow do
 			@add = button "+ Add" do

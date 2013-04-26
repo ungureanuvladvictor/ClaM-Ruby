@@ -30,7 +30,6 @@ def student_menu
 				alert "Please, pick a quiz!"
 			else
 				id = getQuizIdForName($quiz,@choose.text)
-				alert "/quiz/#{id}"
 				visit "/quiz/#{id}"
 			end
 		end
@@ -131,7 +130,7 @@ end
 
 def manage_students
 
-	$lastvisited = "/manage_students"
+	$lastvisited = "/professor_menu"
 
 	stack(:margin => 10) do
 
@@ -142,11 +141,14 @@ def manage_students
 		flow do
 			@b31 = button "Add student" do
 				visit "/add_student"
-
 			end
 			
 			@b32 = button "Delete all" do
-
+				if confirm("Are you sure?")
+					deleteAllStudents($student)
+					executeStudentUpdate("localhost",2000,"delete from student")
+					visit "/manage_students"
+				end
 			end
 
 			@b31.style :width => 160
@@ -171,10 +173,12 @@ def manage_students
 
 		@function = Proc.new do
 			|x| 
-			visit "/student_stats/#{x[1]}"
+			visit "/student_stats/#{x[0]}"
 		end
 
-		@table = table(:top => 130, :left => 10, :rows => 8, :headers => [["#",25],["Name",150],["Taken by",65],["Avg. score",65]], :items => [[1,"Name1","5","80%"]],:blk => @function)
+		st = getFullStudents($student)
+
+		@table = table(:top => 130, :left => 10, :rows => st.size, :headers => [["#",25],["Name",150],["\#Taken",65],["Avg. score",65]], :items => st,:blk => @function)
 
 	end
 end
@@ -190,17 +194,17 @@ def add_student
 
 		flow(:margin_top => 100) do
 			para "Name:"
-			@text = edit_line(:width => 0.6, :right => 20)
+			@name = edit_line(:width => 0.6, :right => 20)
 		end
 
 		flow(:margin_top => 30) do
 			para "Username:"
-			@text1 = edit_line(:width => 0.6, :right => 20)
+			@username = edit_line(:width => 0.6, :right => 20)
 		end
 
 		flow do
 			para "Password:"
-			@text2 = edit_line(:width => 0.6, :right => 20, :secret => true)
+			@pwd = edit_line(:width => 0.6, :right => 20, :secret => true)
 		end
 
 		flow do
@@ -208,7 +212,7 @@ def add_student
 				b = true
 				value = "" 
 				8.times{value << ((rand(2)==1?65:97) + rand(25)).chr}
-				@text2.text = value
+				@pwd.text = value
 			end
 			@bb.style :width => 80, :right => 20, :height => 25, :bottom => 260
 		end
@@ -221,11 +225,14 @@ def add_student
 			@cancel.style :width => 120, :height => 40, :bottom => 120
 
 			@submit = button "Submit" do
-				#alert "Student #{@text.text}, with username #{@text1.text} was generated"
+				#alert "Student #{@name.text}, with username #{@username.text} was generated"
 				if (b == true)
-					alert "Please write down this password: #{@text2.text}"
+					alert "Please write down this password: #{@pwd.text}"
 				end
+				
 				#request to database
+				
+
 				visit $lastvisited
 			end
 			@submit.style :width => 120, :height => 40, :right => 20, :bottom =>120

@@ -10,14 +10,26 @@ def professor_menu
 	stack(:margin => 10) do
 		para link("Logout", :click => '/')
 			
-		tagline "Welcome back, Prof. #{$name} !"
+		fname = getAdminNameByUsername($admin, $name)
 
-		caption "Last added quiz:"
-		para link("N27. Italian Art.", :click => '/quiz_stats/27')
+		tagline "Welcome back, Prof. #{fname} !"
 
-		caption "Latest submission:"
-		para link("N5. Sharks (by G.Bush)", :click => "/quiz_stats/5")
+		l3 = getLatestQuizzes($quiz,3)
 
+		caption "Last added quizzes:"
+
+		link = Array.new(10)
+		i=0
+
+		l3.each do |e|
+			link[i] = Array.new(2)
+			link[i][0] = e[0]
+			link[i][1] = e[1]
+
+			para link("\##{link[i][0]}: #{link[i][1]}", :click => "/quiz_stats/#{link[i][0]}")
+			i = i+1
+		end
+		
 		para ""
 
 		@b1 = button "Manage students" do
@@ -29,7 +41,7 @@ def professor_menu
 		end
 
 		@b3 = button "Print all results" do
-
+			alert "Printer is not connected!"
 		end
 
 		# Why in the world does this work?

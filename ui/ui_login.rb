@@ -19,10 +19,12 @@
 		flow(:margin => 10) do
 			para "Login: "
 			@username = edit_line(:width => 0.6, :right => 20)
+			@username.text = "test"
 		end
 		flow(:margin => 10) do
 			para "Password: "
 			@password = edit_line(:width => 0.6, :right => 20, :secret => true)
+			@password.text = "test"
 		end
 		flow(:margin => 10) do
 			@remember = check
