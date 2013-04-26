@@ -286,7 +286,25 @@ def executeStudentUpdate(address, port, command)
 end
 
 def executeQuestionUpdate(address, port, command)
+  sock = begin
+    Timeout::timeout( 1 ) { TCPSocket.open( address, port ) }
+  rescue StandardError, RuntimeError => ex
+    raise "cannot connect to server: #{ex}"
+  end
 
+  sock.write( "q #{command}\r\n" )
+  sock.close
+end
+
+def executeQuizzUpdate(address, port, command)
+  sock = begin
+    Timeout::timeout( 1 ) { TCPSocket.open( address, port ) }
+  rescue StandardError, RuntimeError => ex
+    raise "cannot connect to server: #{ex}"
+  end
+
+  sock.write( "Q #{command}\r\n" )
+  sock.close
 end
 
 def getFullQuestionsForQuizWithId(dbquiz, dbquestion, quizId)
