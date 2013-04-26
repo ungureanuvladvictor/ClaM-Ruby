@@ -7,7 +7,7 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-  #p getFullStudents(student)
+  p getFullStudents(student)
   #deleteAllStudents(student)
   #getLatestQuizzes(quiz,3)
   #p getAdminNameByUsername(admin,"test")

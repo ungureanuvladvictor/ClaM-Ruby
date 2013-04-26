@@ -316,7 +316,7 @@ def getFullStudents(db)
       end
       if avg.nonzero?
         avg = avg/nr_quizzes
-      elsif
+      else
         avg = '-'
         nr_quizzes = '-'
       end
