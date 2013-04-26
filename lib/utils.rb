@@ -637,3 +637,18 @@ def rescaleQuizForStudentId(dbStudent,studentId,quizId,grade)
       return "update student set scores='#{finalResult.join(",")},' where id=#{studentId}"
     end
 end
+
+def deleteAllQuizzes(dbQuiz,dbStudent)
+    dbQuiz.execute "delete from quiz"
+    executeQuizzUpdate($host,$post,"delete from quiz")
+    result = dbStudent.execute "select id from student"
+    ids = Array.new
+    result.each do |id|
+      ids.push(id[0])
+    end
+     ids.each do |id|
+       query = "update student set scores='', dates='',availablequizes='' where id=#{id}"
+       dbStudent.execute query
+       executeStudentUpdate($host,$port,query)
+     end
+end
