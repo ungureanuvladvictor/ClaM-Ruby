@@ -50,7 +50,9 @@ end
 def addStudent(dbstudent, dbquiz, name, username, pass)
   result = (dbstudent.execute "select max(id) from student")
   if result.nil?
-     result = 0
+     studentId = 0
+  else
+    studentId = result[0][0]
   end
   quizzes = (dbquiz.execute "select id from quiz")
   finalQuizzes = Array.new
