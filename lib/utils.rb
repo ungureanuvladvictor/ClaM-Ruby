@@ -412,8 +412,17 @@ end
 def submitQuiz(dbStudent, studentId, quizId, quizResult, date)
     query = dbStudent.execute "select scores,dates,availablequizes from student where id=#{studentId}"
     quizzes = Array.new
-    if query[0][0] == ""
+    if query[0][0] == nil
       dbStudent.execute "update student set scores='#{quizId} #{quizResult},', dates='#{date},' where id=#{studentId}"
+      finalQuizzes = Array.new
+      availableQuizes = query[0][2].split(" ")
+      availableQuizes.each do |quiz|
+        if quiz!=quizId.to_s
+          finalQuizzes.push(quiz)
+        end
+      end
+      finalQuizzes = finalQuizzes.join(" ")
+      return "update student set scores='#{quizId} #{quizResult},', dates='#{date},',  availablequizes='#{finalQuizzes}' where id=#{studentId}"
     else
       localScores = query[0][0].split","
       localScores.push("#{quizId} #{quizResult}")
