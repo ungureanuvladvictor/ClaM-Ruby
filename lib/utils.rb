@@ -72,7 +72,7 @@ end
 
 def getQuizName(db,id)
   result = (db.execute "select name from quiz where id=#{id}")
-  if result.nil?
+  if result.nil? || result == "" || result == "nil"
     return []
   else
     result[0][0]
