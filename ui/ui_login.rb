@@ -39,7 +39,11 @@
 			$host = @host.text
 			$port = @port.text.to_i
 
-			systemInit($host,$port)
+			if (!systemInit($host,$port))
+				alert "Can not connect to server!"
+				return
+			end
+			
  			$quiz = SQLite3::Database.open 'Quiz.db'
 			$question = SQLite3::Database.open 'Question.db'
 			$student = SQLite3::Database.open 'Student.db'

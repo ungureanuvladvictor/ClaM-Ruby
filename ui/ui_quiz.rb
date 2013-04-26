@@ -36,7 +36,6 @@ def quiz(id)
 
 		#Feed with quiz questions
 		@qu = getFullQuestionsForQuizWithId($quiz, $question, id)
-		#[["Name",45,0,"Answer",["Bla","Bla","Bla","Bla","Bla"]]]
 
 		i = 0
 		@qu.each do |qi|
@@ -168,7 +167,6 @@ def quiz_stats(id)
 
 		flow do
 			@b23 = button "Manage questions" do	
-				$lastvisited = "/quiz_stats/#{id}"
 				visit "/manage_questions/#{id}"
 			end
 
@@ -200,27 +198,23 @@ def quiz_stats(id)
 	end
 end
 
+def manage_questions(qid)
 
-def manage_questions(id)
 	stack(:margin => 5) do
 		para link("Back", :click => $lastvisited)
 
 		inscription "Warning! Altering data for quiz will result in all scores deleted!"
 
-		#pull existing data
-		#delete question
-
 		flow(:margin => 10) do
 			para "Name: "
-			@name = edit_line(:width => 0.6, :right => 20)
+			@name_q = edit_line(:width => 0.6, :right => 20)
+			@name_q.text = getQuizName($quiz,qid)
 		end
 
 		id = 0
 
 		@input = Array.new
 		@out = Array.new
-
-		#stack(:height => 35, :width => 10, :margin => 20){}
 
 		flow do
 			@add = button "+ Add" do
@@ -334,11 +328,6 @@ def manage_questions(id)
 					alert "Please, specify correct question type!"
 				end	
 
-				if id > 0
-					@erase.state = nil;
-					@submit.state = nil;
-				end
-
 				debug @input
 			end
 
@@ -380,6 +369,14 @@ def manage_questions(id)
 					x_correct = x[2].text
 					x_input = x[3]
 
+					if (x_input != nil)
+						x_type = 0
+					elsif (x[2].class == Shoes::EditLine)
+						x_type = 1
+					elsif (x[2].class == Shoes::EditBox)
+						x_type = 2
+					end
+
 					x_input_s = ""
 
 					if (!x_input.nil?)
@@ -392,14 +389,23 @@ def manage_questions(id)
 
 					#debug "Question:\n Name: #{x_name} \n Points: #{x_points} \n Correct = #{x_correct} \n Inputs: #{x_input_s}"
 
-					cmd = addQuestion($question, x_name, x_type.to_i, x_input_s, x_correct, x_pts)
-
 					#write question to db
+					ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
+
+					debug ret[1]
+
+					executeQuestionUpdate($host,$port,ret[0])
+
 					#push id to ids
+					ids.push(ret[1])
 
 				end
 
 				#create quiz with ids
+				id_string = ids.join(" ")
+				cmd = addQuiz($quiz, $student, @name_q.text, id_string)
+
+				executeQuizzUpdate($host,$port,cmd)
 
 				visit "/manage_quizzes"
 			
@@ -409,14 +415,87 @@ def manage_questions(id)
 			@submit.state = "disabled"
 		end
 
-		#populate with data
-	end
+		@qu = getFullQuestionsForQuizWithId($quiz, $question, qid)
 
+		@qu.each do |qi|
+			
+			q_name = qi[0]
+			q_pts = qi[1]
+			q_type = qi[2]
+			q_correct = qi[3]
+			q_answer = qi[4]
+
+			if (q_type == 0)
+				id = id + 1
+
+			elsif (q_type == 1)
+				id = id + 1
+				q_input = Array.new
+
+				@out[id] = stack(:margin => 10) do
+					
+					flow do
+						para "Question \##{id}: "
+						q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_name))
+					end
+
+					flow do
+						para "Points: "
+						q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_pts))
+					end
+
+					flow do
+						para "Correct: "
+						q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_correct))
+					end
+
+					q_input.push(nil)
+					@input.push(q_input)
+				end
+
+			elsif (q_type == 2)
+				id = id + 1
+				q_input = Array.new
+
+				@out[id] = stack(:margin => 10) do
+				
+				flow do
+					para "Question \##{id}: "
+					q_input.push(edit_line(:width => 0.6, :right => 20))
+				end
+
+				flow do
+					para "Points: "
+					q_input.push(edit_line(:width => 0.6, :right => 20))
+				end
+
+				flow do
+					para "Correct: "
+					q_input.push(edit_box(:width => 0.6, :height => 100, :right => 20))
+				end
+
+				q_input.push(nil)
+				@input.push(q_input)
+
+				end
+
+
+			else
+				alert "Invalid question type discovered. Please, contact your professor!"
+				visit "/student_menu"
+			end	
+
+		end
+
+		if id > 0
+			@erase.state = nil;
+			@submit.state = nil;
+		end
+	end
 end
 
 # Overall quiz statistics
 def manage_quizzes
-	$lastvisited = "/manage_quizzes"
 
 	stack(:margin => 10) do
 
@@ -432,6 +511,7 @@ def manage_quizzes
 			@b32 = button "Clear quizzes" do
 				if confirm "Are you sure?"
 					deleteAllQuizzes($quiz,$student)
+					$lastvisited = "/manage_quizzes"
 					visit "/manage_quizzes"
 				end
 			end
@@ -458,6 +538,7 @@ def manage_quizzes
 
 		@function = Proc.new do
 			|x| 
+			$lastvisited = "/manage_quizzes"
 			visit "/quiz_stats/#{x[0]}"
 		end
 
