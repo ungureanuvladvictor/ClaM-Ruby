@@ -164,13 +164,18 @@ def setAvailableQuizesForId(db, id, quizes)
 end
 
 def addQuiz(db, name, questions)
-  id = (db.execute "select count(id) from quiz")[0][0]
-  id +=1
+  id = (db.execute "select max(id) from quiz")[0][0]
+  if id == nil
+    id = 1
+  else
+    id = id + 1
+  end
   db.execute "insert into quiz values(#{id},'#{name}','#{questions}')"
+  return "insert into quiz values(#{id},'#{name}','#{questions}')"
 end
 
 def addQuestion(db, name, type, answers, correct, points)
-  id = (db.execute "select count(id) from question")[0][0]
+  id = (db.execute "select max(id) from question")[0][0]
   if id == nil
     id = 1
   else
