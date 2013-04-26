@@ -1,4 +1,10 @@
-require 'lib/cheat_algorithm'
+begin
+  require 'lib/cheat_algorithm.rb'
+rescue LoadError
+  p "Compiling from source..."
+  require "../lib/cheat_algorithm.rb"
+end
+
 require 'sqlite3'
 require 'socket'
 require 'timeout'

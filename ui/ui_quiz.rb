@@ -1,4 +1,9 @@
-require 'ui/ui_table'
+begin
+	require 'ui/ui_table'
+rescue LoadError
+ 	p "Compiling from source..."
+  	require 'ui_table'
+end
 
 class Quiz < Shoes
 
