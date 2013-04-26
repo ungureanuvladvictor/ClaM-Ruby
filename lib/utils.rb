@@ -407,8 +407,11 @@ end
 def getFullQuizzes(dbQuiz, dbStudent)
   finalQuiz = Array.new
   result = dbQuiz.execute "select id,name from quiz"
+  if result == nil
+    return []
+  end
   if result[0][0] == nil
-    return nil
+    return []
   else
     result.each do |quiz|
       quizId = quiz[0]
