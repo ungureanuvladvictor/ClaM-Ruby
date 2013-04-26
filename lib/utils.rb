@@ -302,10 +302,26 @@ def deleteAllStudents(db)
 end
 
 def getFullStudents(db)
+    finalStudents = Array.new
     result = db.execute "select id, name, scores from student;"
     result.each do |student|
+      id = student[0]
       name = student[1]
       quizzes = student[2].split(",")
+      nr_quizzes = quizzes.size
+      #p quizzes
+      avg = 0
+      quizzes.each do |quiz|
+        avg = avg + quiz.split(" ")[1].to_i
+      end
+      if avg.nonzero?
+        avg = avg/nr_quizzes
+      elsif
+        avg = '-'
+        nr_quizzes = '-'
+      end
 
+      finalStudents.push([id,name,nr_quizzes,avg])
     end
+    return finalStudents
 end
