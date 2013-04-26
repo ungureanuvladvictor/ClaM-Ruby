@@ -5,12 +5,6 @@
  def login
  	$lastvisited = "/"
 
- 	systemInit("localhost",2000)
- 	$quiz = SQLite3::Database.open 'Quiz.db'
-	$question = SQLite3::Database.open 'Question.db'
-	$student = SQLite3::Database.open 'Student.db'
-	$admin = SQLite3::Database.open 'Admin.db'
-
 	stack(:margin => 10) do
 		para ""
 		tagline "Welcome to CLaM!"
@@ -30,11 +24,28 @@
 			@remember = check
 			para "Remember me"
 		end
+
+		flow(:margin => 10) do
+			para "Host/port: "
+			@host = edit_line(:width => 0.52, :margin_left => 40, :margin_right => 10)
+			@host.text = "localhost"
+			@port = edit_line(:width => 0.2, :right => 20)
+			@port.text = "2000"
+		end
+
 		@b1 = button "Login" do
 			
 			$name = @username.text
-			#check username and password here
+			$host = @host.text
+			$port = @port.text.to_i
 
+			systemInit($host,$port)
+ 			$quiz = SQLite3::Database.open 'Quiz.db'
+			$question = SQLite3::Database.open 'Question.db'
+			$student = SQLite3::Database.open 'Student.db'
+			$admin = SQLite3::Database.open 'Admin.db'
+
+			#check username and password here
 			if (@username.text == "" || @password.text == "")
 				alert "Incomplete!"
 				return

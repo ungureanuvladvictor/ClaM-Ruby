@@ -7,12 +7,30 @@ def sim(a,b)
 end
 
 def calc_cheat(a,b)
+  a = a.downcase
+  b = b.downcase
+
   if a.length>b.length
     return calc_cheat(b,a)
   end
+
   if a.length==0
     return [false,0.0]
   end
+
+  if a.length<=20
+    @wordsa=a.split(" ")
+    @wordsb=b.split(" ")
+    count = 0
+    @wordsa.each do |t|
+      if @wordsb.include?(t)
+        count += 1
+      end
+    end
+    @count = @count.to_f/@wordsa.length.to_f
+    return [count>0.75,count]
+  end
+  
   @F=Array.new(a.length)
   for i in 0..a.length-1
     @F[i]=Array.new(b.length)
@@ -40,5 +58,5 @@ end
 #puts calc_cheat('This answer is very similar to the other one','This random answer is almost very similar to the other one')
 #puts calc_cheat('This random answer is almost randomly the same as almost the other one not','This answer is very similar to the other one')
 #puts calc_cheat('This answer is the correct one','I think that this answer is the correct one')
-#puts calc_cheat('answer123','answer 123')
+#puts calc_cheat('answer123','answer')
 
