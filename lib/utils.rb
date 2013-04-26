@@ -177,7 +177,7 @@ def addQuestion(db, name, type, answers, correct, points)
     id = id +1
   end
   db.execute "insert into question values(#{id}, '#{name}', #{type}, '#{answers}', '#{correct}', #{points})"
-  return "insert into question values(#{id}, '#{name}', #{type}, '#{answers}', '#{correct}', #{points})"
+  return ["insert into question values(#{id}, '#{name}', #{type}, '#{answers}', '#{correct}', #{points})",id]
 end
 
 def checkAnswerForQuestionWithId(db, id, answer)
