@@ -613,3 +613,27 @@ def rescaleQuizId(dbQuiz,dbStudent,quizId, grade)
     j = j+1
   end
 end
+
+def rescaleQuizForStudentId(dbStudent,studentId,quizId,grade)
+    result = dbStudent.execute "select scores from student where id=#{studentId}"
+    if result[0][0] == nil
+      return []
+    end
+    if result == []
+      return []
+    else
+      result =result[0][0].split","
+      finalResult = Array.new
+      result.each do |quiz|
+        quiz = quiz.split(" ")
+        if quiz[0].to_s == quizId.to_s
+          grd = quiz[1].to_i + grade
+          finalResult.push("#{quiz[0]} #{grd}")
+        else
+          finalResult.push("#{quiz[0]} #{quiz[1]}")
+        end
+      end
+      dbStudent.execute "update student set scores='#{finalResult.join(",")}' where id=#{studentId}"
+      return "update student set scores='#{finalResult.join(",")},' where id=#{studentId}"
+    end
+end
