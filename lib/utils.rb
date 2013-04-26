@@ -691,7 +691,6 @@ def changePass(dbStudent, studentId, pass)
     executeStudentUpdate($host, $port, query)
 end
 
-
 def deleteQuizWithId(dbQuiz, dbStudent, dbQuestion, quizId)
     query = "delete from quiz where id=#{quizId}"
     dbQuiz.execute query
@@ -754,3 +753,4 @@ def deleteQuizWithId(dbQuiz, dbStudent, dbQuestion, quizId)
       executeStudentUpdate($host, $port, query)
     end
 end
+
