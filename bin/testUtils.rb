@@ -6,6 +6,10 @@ begin
   question = SQLite3::Database.open 'Question.db'
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
+
+
+  submitQuiz(student, 4, 3, 2, "da")
+
   #addQuiz(quiz,student,"vlad","1 2 3")
 
 #addQuestion(question,"vlad",1,"vlad//vlad//vlad","vlad",23)
