@@ -300,3 +300,18 @@ end
 def deleteAllStudents(db)
     db.execute "delete from student"
 end
+
+def getFullStudents(db)
+    result = db.execute "select id, name, scores from student;"
+    result.each do |student|
+      name = student[1]
+      quizzes = student[2].split(",")
+      nrQuizes = 0
+      avg = 0
+      p quizzes
+      quizzes.each do |quiz|
+        avg = avg+1
+      end
+      p avg
+    end
+end
