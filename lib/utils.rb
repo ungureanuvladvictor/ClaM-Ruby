@@ -1,7 +1,6 @@
 begin
   require 'lib/cheat_algorithm.rb'
 rescue LoadError
-  p "Compiling from source..."
   require "../lib/cheat_algorithm.rb"
 end
 
@@ -33,7 +32,7 @@ end
 
 def checkLoginStudent(db,name,pass)
   localPass = db.execute "select pass from student where username ='#{name}'"
-  p name
+  #p name
   if localPass == []
     return false
   elsif

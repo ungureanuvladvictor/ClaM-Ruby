@@ -5,7 +5,7 @@ begin
 	require 'ui/ui_professor'
 	require 'ui/ui_quiz'
 rescue LoadError
- 	p "Compiling from source..."
+ 	p "Packaging failed. Compiling from source..."
   	require '../lib/utils.rb'
 	require 'ui_login'
 	require 'ui_student'
