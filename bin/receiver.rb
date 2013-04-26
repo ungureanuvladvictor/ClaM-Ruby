@@ -8,10 +8,10 @@ rescue StandardError, RuntimeError => ex
   raise "cannot connect to server: #{ex}"
 end
 
-sock.write( "dude\r\n" )
+sock.write( "s select * from student\r\n" )
 response = begin
   Timeout::timeout(1) {
-    sock.recv(10000).chomp("\n")
+    #sock.recv(10000).chomp("\n")
   }
 rescue TimeoutError,StandardError, RuntimeError => ex
   raise "no response from server: #{ex}"
@@ -22,6 +22,6 @@ p response
 #fileToWrite.print(response)
 #fileToWrite.close
 sock.close
-=end
 
 #systemInit('localhost',2000)
+=end

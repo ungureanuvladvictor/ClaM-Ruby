@@ -171,8 +171,13 @@ end
 
 def addQuestion(db, name, type, answers, correct, points)
   id = (db.execute "select count(id) from question")[0][0]
-  id += 1
+  if id == nil
+    id = 1
+  else
+    id = id +1
+  end
   db.execute "insert into question values(#{id}, '#{name}', #{type}, '#{answers}', '#{correct}', #{points})"
+  return "insert into question values(#{id}, '#{name}', #{type}, '#{answers}', '#{correct}', #{points})"
 end
 
 def checkAnswerForQuestionWithId(db, id, answer)
@@ -276,8 +281,12 @@ def executeStudentUpdate(address, port, command)
     raise "cannot connect to server: #{ex}"
   end
 
-  sock.write( "#{command}\r\n" )
+  sock.write( "s #{command}\r\n" )
   sock.close
+end
+
+def executeQuestionUpdate(address, port, command)
+
 end
 
 def getFullQuestionsForQuizWithId(dbquiz, dbquestion, quizId)

@@ -14,8 +14,17 @@ loop do
       x = fileToSend.read
       sock.puts(x)
       else
-        student = SQLite3::Database.open '../db/Student.db'
-        student.execute message
+        if message[0].chr == 's'
+          database = "Student.db"
+        elsif message[0].chr == 'q'
+          database = "Question.db"
+        elsif message[0].chr == 'Q'
+          database = "Quiz.db"
+        else
+          p message[0].chr
+        end
+        student = SQLite3::Database.open "../db/#{database}"
+        student.execute message[2,message.length]
         student.close if student
       end
     else
