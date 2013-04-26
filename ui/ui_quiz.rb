@@ -62,8 +62,7 @@ def quiz(id)
 
 			elsif (q_type == 1)
 				para "Question \##{i}: #{q_name} (#{q_pts})"
-				@choose.push(edit_line(:width => 0.6, :right => 20)
-)
+				@choose.push(edit_line(:width => 0.6, :right => 20))
 			elsif (q_type == 2)
 				para "Question \##{i}: #{q_name} (#{q_pts})"
 				@choose.push(edit_box(:width => 0.6, :height => 100, :right => 20))
@@ -153,7 +152,8 @@ def quiz_stats(id)
 		flow do
 			@b21 = button "Delete quiz" do
 				#Delete quiz here
-
+				
+				deleteQuizWithId($quiz, $student, $question, id)
 				visit $lastvisited
 			end
 
@@ -203,7 +203,7 @@ def manage_questions(qid)
 	stack(:margin => 5) do
 		para link("Back", :click => $lastvisited)
 
-		inscription "Warning! Altering data for quiz will result in all scores deleted!"
+		inscription "Warning! Altering data for quiz will result in quiz being re-created, and as result, all scores deleted!"
 
 		flow(:margin => 10) do
 			para "Name: "
@@ -329,6 +329,11 @@ def manage_questions(qid)
 				end	
 
 				debug @input
+
+				if id > 0
+					@erase.state = nil;
+					@submit.state = nil;
+				end
 			end
 
 			@erase = button "- Remove" do
@@ -356,11 +361,10 @@ def manage_questions(qid)
 			@cancel.style :margin_left => 5
 
 			@submit = button "Submit!" do
-				# CHECK FOR NUMBER OF POINTS
-				# CHECK IF FIELDS FILLED
-				#write to database (somehow)
-				
+				# CHECK IF FIELDS FILLED				
 				ids = Array.new
+
+				deleteQuizWithId($quiz, $student, $question, qid)
 
 				@input.each do |x|
 
@@ -392,7 +396,7 @@ def manage_questions(qid)
 					#write question to db
 					ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
 
-					debug ret[1]
+					#debug ret[1]
 
 					executeQuestionUpdate($host,$port,ret[0])
 
@@ -425,8 +429,43 @@ def manage_questions(qid)
 			q_correct = qi[3]
 			q_answer = qi[4]
 
+			debug "Name: #{q_name} \n Points: #{q_pts} \n Type: #{q_type} \n Correct: #{q_correct} \n Answer = #{q_answer}"
+
 			if (q_type == 0)
 				id = id + 1
+
+				q_input = Array.new
+
+				@out[id] = stack(:margin => 10) do
+
+					flow do
+						para "Question \##{id}: "
+						q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_name))
+					end
+
+					flow do
+						para "Points: "
+						q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_pts))
+					end
+
+					i = 0
+					option = Array.new
+					while i < q_answer.size
+						flow do
+							para "Option \##{i+1}: "
+							option.push(edit_line(:width => 0.6, :right => 20, :text => q_answer[i]))
+						end
+						i = i+1
+					end
+
+					flow do
+						para "Correct: "
+						q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_correct))
+					end
+
+					q_input.push(option)
+					@input.push(q_input)
+				end
 
 			elsif (q_type == 1)
 				id = id + 1
@@ -461,17 +500,17 @@ def manage_questions(qid)
 				
 				flow do
 					para "Question \##{id}: "
-					q_input.push(edit_line(:width => 0.6, :right => 20))
+					q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_name))
 				end
 
 				flow do
 					para "Points: "
-					q_input.push(edit_line(:width => 0.6, :right => 20))
+					q_input.push(edit_line(:width => 0.6, :right => 20, :text => q_pts))
 				end
 
 				flow do
 					para "Correct: "
-					q_input.push(edit_box(:width => 0.6, :height => 100, :right => 20))
+					q_input.push(edit_box(:width => 0.6, :height => 100, :right => 20, :text => q_correct))
 				end
 
 				q_input.push(nil)
@@ -491,6 +530,7 @@ def manage_questions(qid)
 			@erase.state = nil;
 			@submit.state = nil;
 		end
+
 	end
 end
 
@@ -510,7 +550,7 @@ def manage_quizzes
 			
 			@b32 = button "Clear quizzes" do
 				if confirm "Are you sure?"
-					deleteAllQuizzes($quiz,$student)
+					deleteAllQuizzes($quiz,$student,$question)
 					$lastvisited = "/manage_quizzes"
 					visit "/manage_quizzes"
 				end
@@ -748,7 +788,7 @@ def add_quiz
 					#write question to db
 					ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
 
-					debug ret[1]
+					#debug ret[1]
 
 					executeQuestionUpdate($host,$port,ret[0])
 
