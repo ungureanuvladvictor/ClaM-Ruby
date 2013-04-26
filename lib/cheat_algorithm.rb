@@ -1,31 +1,40 @@
-def calc_cheat(a,b)
-  wordsa = a.downcase.split(/\.?\s+/)
-  wordsb = b.downcase.split(/\.?\s+/)
-  if wordsa.count>wordsb.count
-    return calc_cheat(b,a)
+def sim(a,b)
+  if a==b
+    return 1
+  else
+    return -1
   end
-  counta=0
-  countb=0
-  wordsa.each do |i|
-    if wordsb.include?(i)
-      counta = counta+1
-    end
-  end
-  wordsb.each do |i|
-    if wordsa.include?(i)
-      countb = countb+1
-    end
-  end
-  ret = counta.to_f/wordsa.count.to_f
-  if wordsa.count<=5
-    return [ret>0.5,ret]
-  elsif wordsa.count<=10
-    return [ret>0.75,ret]
-  end
-  return [ret>0.5,ret]
 end
 
-#puts calc_cheat('This answer is very similar to the other one','This answer is extremely similar to the other one')
-#puts calc_cheat('This answer is very similar to the other one','This random answer is almost randomly the same as almost the other one not')
-#puts calc_cheat('This random answer is almost randomly the same as almost the other one not','This answer is very similar to the other one')
+def calc_cheat(a,b)
+  if a.length>b.length
+    return calc_cheat(b,a)
+  end
+  @F=Array.new(a.length)
+  for i in 0..a.length-1
+    @F[i]=Array.new(b.length)
+    @F[i][0]=i
+  end
+
+  for j in 1..b.length-1
+    @F[0][j]=j
+  end
+
+  for i in 1..a.length-1
+    for j in 1..b.length-1
+      @Match = @F[i-1][j-1] + sim(a[i], b[j])
+      @Delete = @F[i-1][j] -1
+      @Insert = @F[i][j-1] -1
+      @F[i][j] = [@Match, @Insert, @Delete].max
+    end
+  end
+  ret = @F[a.length-1][b.length-1]  .to_f / b.length.to_f
+  return [ret>0.65,ret]
+end
+
+
+puts calc_cheat('This answer is very similar to the other one','This answer is extremely similar to the other one')
+puts calc_cheat('This answer is very similar to the other one','This random answer is almost very similar to the other one')
+puts calc_cheat('This random answer is almost randomly the same as almost the other one not','This answer is very similar to the other one')
+puts calc_cheat('answer123','answer 123')
 
