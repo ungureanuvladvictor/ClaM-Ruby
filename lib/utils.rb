@@ -457,3 +457,36 @@ def submitQuiz(dbStudent, studentId, quizId, quizResult, date)
     end
   return "update student set scores='#{localScores},', dates='#{dates},', availablequizes='#{finalQuizzes}' where id=#{studentId}"
 end
+
+def getQuizInfo(dbStudent, dbQuiz, quizId)
+    finalResult = Array.new
+    studentIds = dbStudent.execute "select id from student"
+    studentIds.each do |student|
+      student = student[0]
+      result = quizDataForStudentId(dbStudent,quizId,student)
+      if result != []
+        finalResult.push(result)
+        end
+    end
+    p finalResult
+end
+
+def quizDataForStudentId(dbStudent, quizId, studentId)
+    finalResult = Array.new
+    result = dbStudent.execute "select scores,dates,name from student where id=#{studentId}"
+    if result[0][0] == nil
+      return []
+    end
+    scores = result[0][0].split","
+    dates = result[0][1].split","
+    name = result[0][2]
+    i = 0
+    scores.each do |quiz|
+      id = quiz.split(" ")
+      if id[0].to_s == quizId.to_s
+        finalResult.push(studentId,name,id[1],dates[i])
+      end
+      i = i+1
+      end
+    return finalResult
+end

@@ -33,8 +33,8 @@ def calc_cheat(a,b)
 end
 
 
-puts calc_cheat('This answer is very similar to the other one','This answer is extremely similar to the other one')
-puts calc_cheat('This answer is very similar to the other one','This random answer is almost very similar to the other one')
-puts calc_cheat('This random answer is almost randomly the same as almost the other one not','This answer is very similar to the other one')
-puts calc_cheat('answer123','answer 123')
+#puts calc_cheat('This answer is very similar to the other one','This answer is extremely similar to the other one')
+#puts calc_cheat('This answer is very similar to the other one','This random answer is almost very similar to the other one')
+#puts calc_cheat('This random answer is almost randomly the same as almost the other one not','This answer is very similar to the other one')
+#puts calc_cheat('answer123','answer 123')
 
