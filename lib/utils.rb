@@ -407,6 +407,7 @@ end
 def getFullQuizzes(dbQuiz, dbStudent)
   finalQuiz = Array.new
   result = dbQuiz.execute "select id,name from quiz"
+  p result
   if result == nil
     return []
   end
