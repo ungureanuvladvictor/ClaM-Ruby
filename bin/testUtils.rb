@@ -6,6 +6,8 @@ begin
   question = SQLite3::Database.open 'Question.db'
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
+  #addQuiz(quiz,student,"vlad","1 2 3")
+
 #addQuestion(question,"vlad",1,"vlad//vlad//vlad","vlad",23)
     #getQuizInfo(student,quiz,2)
     #quizDataForStudentId(student,2,1)
@@ -16,7 +18,7 @@ begin
   #p getFullQuizzes(quiz, student)
  # p getStudentNrWithQuizId(student,4)
   # addStudent(student, quiz, "filip", "fp", "fp")
-  p getFullStudents(student)
+  #p getFullStudents(student)
   #deleteAllStudents(student)
   #getLatestQuizzes(quiz,3)
   #p getAdminNameByUsername(admin,"test")

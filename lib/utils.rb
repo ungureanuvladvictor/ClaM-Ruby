@@ -163,7 +163,7 @@ def setAvailableQuizesForId(db, id, quizes)
   db.execute "update student set availablequizes='#{quizes}' where id=#{id}"
 end
 
-def addQuiz(db, name, questions)
+def addQuiz(db,studentdb, name, questions)
   id = (db.execute "select max(id) from quiz")[0][0]
   if id == nil
     id = 1
@@ -171,6 +171,12 @@ def addQuiz(db, name, questions)
     id = id + 1
   end
   db.execute "insert into quiz values(#{id},'#{name}','#{questions}')"
+   result =  studentdb.execute "select id,availablequizes from student"
+   result.each do |student|
+     student[1] = student[1]+" #{id}"
+     studentdb.execute "update student set availablequizes='#{student[1]}' where id=#{student[0]}"
+     executeStudentUpdate('localhost',2000,"update student set availablequizes='#{student[1]}' where id=#{student[0]}")
+   end
   return "insert into quiz values(#{id},'#{name}','#{questions}')"
 end
 
@@ -367,7 +373,6 @@ end
 def getFullStudents(db)
     finalStudents = Array.new
     result = db.execute "select id, name, scores from student;"
-    p result
     result.each do |student|
       id = student[0]
       name = student[1]
