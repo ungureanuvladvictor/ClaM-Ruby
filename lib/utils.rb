@@ -108,13 +108,13 @@ def getQuizzesTaken(dbstudent, dbquiz, id)
   for i in 0...quizzScores.size
     partial = String.new
     partial += (i+1).to_s
-    partial += " "
+    partial += "//"
     partial += quizzNames[i].to_s
-    partial += " "
+    partial += "//"
     partial += quizzDates[i].to_s
-    partial += " "
+    partial += "//"
     partial += quizzScores[i].to_s
-    quiz.push(partial.split(" "))
+    quiz.push(partial.split("//"))
   end
   quiz
 end
@@ -125,7 +125,7 @@ end
 
 def getDatesForStudentId(db,id)
   result = (db.execute "select dates from student where id=#{id}")
-  if result[0][0] == nil
+  if result == nil || result == [] || result == "" || result == "nil"
     return [""]
   else
     result = result[0][0].split(",")
@@ -136,7 +136,7 @@ end
 def getQuizesForStudentId(db,id)
   quizList = Array.new
   result = db.execute "select scores from student where id=#{id}"
-  if result[0][0] == nil
+  if result == nil || result == "" || result == []
     return [""]
   else
     quizes = result[0][0].split(",")
