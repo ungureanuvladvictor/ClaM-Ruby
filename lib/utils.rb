@@ -55,6 +55,7 @@ def addStudent(dbstudent, dbquiz, name, username, pass)
     finalQuizzes.push(quizId[0])
   end
   dbstudent.execute "insert into student values(#{studentId+1}, '#{name}', '#{pass}', '', '#{finalQuizzes.join(" ")}', '','#{username}')"
+  return "insert into student values(#{studentId+1}, '#{name}', '#{pass}', '', '#{finalQuizzes.join(" ")}', '','#{username}')"
 end
 
 def getQuizName(db,id)
