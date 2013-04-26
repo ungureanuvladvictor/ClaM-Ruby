@@ -47,11 +47,14 @@ def checkLoginAdmin(db,name,pass)
   end
 end
 
-def addStudent(db,name,pass)
-  p db
-  studentId = (db.execute "select count(id) from student")[0][0]
-  p studentId
-  db.execute "insert into student values(#{studentId+1}, '#{name}', '#{pass}','','','')"
+def addStudent(dbstudent, dbquiz, name, username, pass)
+  studentId = (dbstudent.execute "select max(id) from student")[0][0]
+  quizzes = (dbquiz.execute "select id from quiz")
+  finalQuizzes = Array.new
+  quizzes.each do |quizId|
+    finalQuizzes.push(quizId[0])
+  end
+  dbstudent.execute "insert into student values(#{studentId+1}, '#{name}', '#{pass}', '', '#{finalQuizzes.join(" ")}', '','#{username}')"
 end
 
 def getQuizName(db,id)
