@@ -7,7 +7,9 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-   p submitQuiz(student, 4, 1, 100,"11.03.2013")
+   # getQuizzesTaken(student,quiz,4)
+    #p getDatesForStudentId(student,4)
+   #p submitQuiz(student, 4, 1, 100,"11.03.2013")
   # getStudentsAvgGradeForQuizId(student,1)
   #p getFullQuizzes(quiz, student)
   #p getStudentNrWithQuizId(student,1)

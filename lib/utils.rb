@@ -88,8 +88,11 @@ def getQuizzesTaken(dbstudent, dbquiz, id)
   quizzNames = Array.new
   quizzScores = Array.new
   quizzDates = getDatesForStudentId(dbstudent,id)
-
   quizzesId = getQuizesForStudentId(dbstudent,id)
+
+  if quizzDates == [""]
+    return []
+  end
   getScoresForStundetId(dbstudent,id).each do |tuple|
     quizzScores.push((tuple.split(" "))[1])
   end
@@ -116,12 +119,24 @@ def getScoresForStundetId(db,id)
 end
 
 def getDatesForStudentId(db,id)
-  (db.execute "select dates from student where id=#{id}")[0][0].split(",")
+  result = (db.execute "select dates from student where id=#{id}")
+  if result[0][0] == nil
+    return [""]
+  else
+    result = result[0][0].split(",")
+  end
+  return result
 end
 
 def getQuizesForStudentId(db,id)
   quizList = Array.new
-  quizes = (db.execute "select scores from student where id=#{id}")[0][0].split(",")
+  result = db.execute "select scores from student where id=#{id}"
+  if result[0][0] == nil
+    return [""]
+  else
+    quizes = result[0][0].split(",")
+
+  end
 
   quizes.each do |quiz|
     quizId = quiz.split(" ")
