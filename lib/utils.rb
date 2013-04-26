@@ -421,6 +421,10 @@ def getFullQuizzes(dbQuiz, dbStudent)
       quizName = quiz[1]
       quizTaken = getStudentNrWithQuizId(dbStudent,quizId)
       quizAvg = getStudentsAvgGradeForQuizId(dbStudent,quizId)
+      if quizTaken.to_i == 0
+        quizTaken = "-"
+        quizAvg = "-"
+      end
       finalQuiz.push([quizId,quizName,quizTaken,quizAvg])
     end
   end
