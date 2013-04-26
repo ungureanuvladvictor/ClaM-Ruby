@@ -484,7 +484,7 @@ def quizDataForStudentId(dbStudent, quizId, studentId)
     scores.each do |quiz|
       id = quiz.split(" ")
       if id[0].to_s == quizId.to_s
-        finalResult.push(studentId,name,id[1],dates[i])
+        finalResult.push(studentId,name,dates[i],id[1])
       end
       i = i+1
       end
