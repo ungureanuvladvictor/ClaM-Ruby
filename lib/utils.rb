@@ -640,7 +640,7 @@ end
 
 def deleteAllQuizzes(dbQuiz, dbStudent)
     dbQuiz.execute "delete from quiz"
-    executeQuizzUpdate($host,$post,"delete from quiz")
+    executeQuizzUpdate($host,$port,"delete from quiz")
     result = dbStudent.execute "select id from student"
     ids = Array.new
     result.each do |id|
