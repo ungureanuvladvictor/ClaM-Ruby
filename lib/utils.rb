@@ -683,32 +683,63 @@ end
 
 
 def deleteQuizWithId(dbQuiz, dbStudent, dbQuestion, quizId)
-    #query = "delete from quiz where id=#{quizId}"
-    #dbQuiz.execute query
-    #executeQuizzUpdate($host,$port,query)
+    query = "delete from quiz where id=#{quizId}"
+    dbQuiz.execute query
+    executeQuizzUpdate($host,$port,query)
 
   questions =  dbQuiz.execute "select questions from quiz where id=#{quizId}"
     questions = questions[0][0].split(" ")
     questions.each do |question|
       q = "delete from question where id=#{question}"
-      #dbQuestion.execute q
-      #executeQuestionUpdate($host, $port, q)
+      dbQuestion.execute q
+      executeQuestionUpdate($host, $port, q)
     end
-
     query = "select id, scores,availablequizes,dates from student"
     result = dbStudent.execute query
-    ids = Array.new
-    scores = Array.new
     result.each do |student|
-      ids.push student[0]
-     # p student[3].split","
-
-    end
-    result.each do |student|
-      student[1].split(",").each do |pair|
-        scores.push pair
+      id = student[0]
+      scores = student[1].split(",")
+      availablequizzes= student[2].split" "
+      dates = student[3].split","
+      i = 0
+      newScores = Array.new
+      deleteIds = Array.new
+      newDates = Array.new
+      newAQ = Array.new
+      scores.each do |pair|
+        localQuizId = (pair.split " ")[0]
+        if !(localQuizId.to_i == quizId.to_i)
+          newScores.push(pair)
+          else
+            deleteIds.push(i)
+        end
+        i = i+1
       end
+      deleteIds.each do |idToDelete|
+        dates.delete_at(idToDelete)
+      end
+      availablequizzes.each do |quiz|
+        if quiz.to_i != quizId.to_i
+          newAQ.push quiz
+        end
+      end
+      if newAQ.nil?
+        newAQ = ""
+      else
+          newAQ = newAQ.join" "
+      end
+      if newScores.nil?
+        newScores = ""
+      else
+          newScores = newScores.join","
+      end
+      if dates.nil?
+        dates = ""
+      else
+          dates = dates.join","
+      end
+      query = "update student set scores='#{newScores}',availablequizes='#{newAQ}',dates='#{dates}' where id=#{id}"
+      dbStudent.execute query
+      executeStudentUpdate($host, $port, query)
     end
-    #p ids
-    #p scores
 end

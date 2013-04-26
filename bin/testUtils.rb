@@ -7,7 +7,7 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
-    deleteQuizWithId(quiz,student,question,1)
+    #deleteQuizWithId(quiz,student,question,1)
     #deleteAllQuizzes(quiz,student)
     #p [1,2,3,4].index(4)
    #p rescaleQuizForStudentId(student,1,33,20)
