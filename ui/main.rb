@@ -13,7 +13,4 @@ Shoes.app(
 
 #todo:
 
-#addquiz
-#modifyquestions
-#modifys 
-
+#all done ^^

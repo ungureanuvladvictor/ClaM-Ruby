@@ -19,8 +19,8 @@ def calc_cheat(a,b)
   end
 
   if a.length<=20
-    @wordsa=a.split(" ")
-    @wordsb=b.split(" ")
+    @wordsa=a.split(/\?|\!|\.|\,|\b/)
+    @wordsb=b.split(/\?|\!|\.|\,|\b/)
     count = 0
     @wordsa.each do |t|
       if @wordsb.include?(t)
@@ -58,5 +58,5 @@ end
 #puts calc_cheat('This answer is very similar to the other one','This random answer is almost very similar to the other one')
 #puts calc_cheat('This random answer is almost randomly the same as almost the other one not','This answer is very similar to the other one')
 #puts calc_cheat('This answer is the correct one','I think that this answer is the correct one')
-#puts calc_cheat('answer123','answer')
+#puts calc_cheat('answer123,!','answer123')
 
