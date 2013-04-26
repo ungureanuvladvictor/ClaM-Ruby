@@ -6,7 +6,7 @@ begin
   question = SQLite3::Database.open 'Question.db'
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
-
+addQuestion(question,"vlad",1,"vlad//vlad//vlad","vlad",23)
     #getQuizInfo(student,quiz,2)
     #quizDataForStudentId(student,2,1)
    # getQuizzesTaken(student,quiz,4)
