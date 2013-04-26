@@ -629,16 +629,25 @@ def rescaleQuizId(dbQuiz,dbStudent,quizId, grade)
   j = 0
   result.each do |quiz|
     quiz = quiz.split(",")
+    #p quiz
     quiz.each do |i|
+      x = i
       i = i.split(" ")
-      #p i
-      if i[0].to_s == quizId.to_s
-        grd =  i[1].to_i + grade
+      if i[0].to_i == quizId.to_i
+        grd =  i[1].to_f + grade
+        p grd
+        p query[j][1]
         finalresult.push([i[0],grd].join(" "))
+      else
+        finalresult.push([i[0],i[1]].join(" "))
       end
     end
+    #finalresult
+    #p "update student set scores='#{finalresult.join(",")}' where id=#{query[j][1]}"
+    #p finalresult
     dbStudent.execute "update student set scores='#{finalresult.join(",")},' where id=#{query[j][1]}"
     executeStudentUpdate($host,$port,"update student set scores='#{finalresult.join(",")},' where id=#{query[j][1]}")
+    finalresult = []
     j = j+1
   end
 end

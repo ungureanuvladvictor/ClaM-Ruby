@@ -7,13 +7,15 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
+
+    #resca
      #p getQuizzesTaken(student,quiz,3)
    #p  getAvailableQuizesForId(student,quiz,3)
     #deleteQuizWithId(quiz,student,question,1)
     #deleteAllQuizzes(quiz,student)
     #p [1,2,3,4].index(4)
    #p rescaleQuizForStudentId(student,1,33,20)
-    #rescaleQuizId(quiz,student,2,4)
+    rescaleQuizId(quiz,student,1,4)
    #p  quizDataForStudentId(student, quiz,1)
    #quizesForStudent(student,quiz,2)
   #submitQuiz(student, 4, 3, 2, "da")
