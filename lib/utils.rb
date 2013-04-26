@@ -71,7 +71,12 @@ def addStudent(dbstudent, dbquiz, name, username, pass)
 end
 
 def getQuizName(db,id)
-  return (db.execute "select name from quiz where id=#{id}")[0][0]
+  result = (db.execute "select name from quiz where id=#{id}")
+  if result.nil?
+    return []
+  else
+    result[0][0]
+  end
 end
 
 def getQuizIdForName(db, name)
