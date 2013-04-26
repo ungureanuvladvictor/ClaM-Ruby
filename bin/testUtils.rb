@@ -7,6 +7,7 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
+   #p  getAvailableQuizesForId(student,quiz,3)
     #deleteQuizWithId(quiz,student,question,1)
     #deleteAllQuizzes(quiz,student)
     #p [1,2,3,4].index(4)

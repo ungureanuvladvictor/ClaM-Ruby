@@ -153,7 +153,8 @@ end
 def getAvailableQuizesForId(dbStudent, dbQuiz, id)
   names = Array.new
   result = (dbStudent.execute "select availablequizes from student where id=#{id}")
-  if result.nil? || result == "" || result == "nil"
+  p result
+  if result.nil? || result == "" || result == "nil" || result == []
     return []
   end
   result = result[0][0]
