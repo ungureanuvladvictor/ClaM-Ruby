@@ -657,9 +657,11 @@ def rescaleQuizForStudentId(dbStudent, studentId, quizId, grade)
     end
 end
 
-def deleteAllQuizzes(dbQuiz, dbStudent)
+def deleteAllQuizzes(dbQuiz, dbStudent, dbQuestion)
+    dbQuestion.execute "delete from question"
     dbQuiz.execute "delete from quiz"
     executeQuizzUpdate($host,$port,"delete from quiz")
+    executeQuestionUpdate($host, $port, "delete from question")
     result = dbStudent.execute "select id from student"
     ids = Array.new
     result.each do |id|
@@ -679,36 +681,25 @@ def changePass(dbStudent, studentId, pass)
     executeStudentUpdate($host, $port, query)
 end
 
-=begin
+
 def deleteQuizWithId(dbQuiz, dbStudent, quizId)
     #query = "delete from quiz where id=#{quizId}"
     #dbQuiz.execute query
     #executeQuizzUpdate($host,$port,query)
     query = "select id, scores,availablequizes,dates from student"
     result = dbStudent.execute query
-    result.each do |sinfo|
-      id = sinfo[0]
-      availableQuiz = sinfo[2]
-      scores = sinfo[3]
-      if scores == nil
-        break
-      end
-      newScores = Array.new
-      newAvailable = Array.new
-      if availableQuiz.to_s == ""
-        newAvailable.push("")
-      else
-        availableQuiz.split(" ").each do |quiz|
-          if quiz.to_s != quizId.to_s
-            newAvailable.push(quiz)
-          end
-        end
-        #newAvailable
-         scores.each do |score|
-          score = score.split(",")
-           p score
-         end
+    ids = Array.new
+    scores = Array.new
+    result.each do |student|
+      ids.push student[0]
+      p student[3].split","
+
+    end
+    result.each do |student|
+      student[1].split(",").each do |pair|
+        scores.push pair
       end
     end
+    p ids
+    p scores
 end
-=end
