@@ -7,6 +7,7 @@ begin
   student = SQLite3::Database.open 'Student.db'
   admin = SQLite3::Database.open 'Admin.db'
 
+    p [1,2,3,4].index(4)
    #p rescaleQuizForStudentId(student,1,33,20)
     #rescaleQuizId(quiz,student,2,4)
    #p  quizDataForStudentId(student, quiz,1)

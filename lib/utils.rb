@@ -627,7 +627,7 @@ def rescaleQuizForStudentId(dbStudent,studentId,quizId,grade)
       result.each do |quiz|
         quiz = quiz.split(" ")
         if quiz[0].to_s == quizId.to_s
-          grd = quiz[1].to_i + grade
+          grd = grade
           finalResult.push("#{quiz[0]} #{grd}")
         else
           finalResult.push("#{quiz[0]} #{quiz[1]}")
