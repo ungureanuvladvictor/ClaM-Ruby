@@ -410,7 +410,7 @@ def getFullQuizzes(dbQuiz, dbStudent)
   if result == nil
     return []
   end
-  if result[0][0] == nil
+  if result[0][0] == "nil"
     return []
   else
     result.each do |quiz|
