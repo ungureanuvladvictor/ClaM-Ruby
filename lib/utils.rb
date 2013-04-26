@@ -152,7 +152,11 @@ end
 
 def getAvailableQuizesForId(dbStudent, dbQuiz, id)
   names = Array.new
-  result = (dbStudent.execute "select availablequizes from student where id=#{id}")[0][0]
+  result = (dbStudent.execute "select availablequizes from student where id=#{id}")
+  if result.nil? || result == "" || result == "nil"
+    return []
+  end
+  result = result[0][0]
   unless result == nil then
     partial = result.split(" ")
     partial.each do |j|
