@@ -367,15 +367,25 @@ end
 def getFullStudents(db)
     finalStudents = Array.new
     result = db.execute "select id, name, scores from student;"
+    p result
     result.each do |student|
       id = student[0]
       name = student[1]
-      quizzes = student[2].split(",")
+      if student[2] != nil
+        quizzes = student[2].split(",")
+      else
+        quizzes = []
+      end
       nr_quizzes = quizzes.size
       #p quizzes
       avg = 0
       quizzes.each do |quiz|
-        avg = avg + quiz.split(" ")[1].to_i
+        if quiz == nil
+          grd =0
+        else
+          grd = quiz.split(" ")[1].to_i
+        end
+        avg = avg + grd
       end
       if avg.nonzero?
         avg = avg/nr_quizzes
