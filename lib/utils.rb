@@ -49,8 +49,8 @@ end
 
 def addStudent(dbstudent, dbquiz, name, username, pass)
   result = (dbstudent.execute "select max(id) from student")
-  if result.nil?
-     studentId = 0
+  if result[0][0] == nil
+    studentId = 0
   else
     studentId = result[0][0]
   end
