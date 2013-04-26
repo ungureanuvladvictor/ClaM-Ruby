@@ -3,6 +3,13 @@ require 'sqlite3'
 require 'socket'
 require 'timeout'
 
+def getStudentNameById(db, id)
+  return (db.execute "select name from student where id='#{id}'")[0][0]
+end
+
+def getAdminNameById(db, id)
+  return (db.execute "select name from admin where id='#{id}'")[0][0]
+end
 
 def getStudentNameByUsername(db, username)
   return (db.execute "select name from student where username='#{username}'")[0][0]
@@ -400,4 +407,29 @@ def getStudentsAvgGradeForQuizId(dbStudent, quizId)
   else
     return avg/number.to_f
   end
+end
+
+def submitQuiz(dbStudent, studentId, quizId, quizResult, date)
+    query = dbStudent.execute "select scores,dates,availablequizes from student where id=#{studentId}"
+    quizzes = Array.new
+    if query[0][0] == ""
+      dbStudent.execute "update student set scores='#{quizId} #{quizResult},', date='#{date},' where id=#{studentId}"
+    else
+      localScores = query[0][0].split","
+      localScores.push("#{quizId} #{quizResult}")
+      localScores = localScores.join(",")
+      dates = query[0][1].split","
+      dates.push(date)
+      dates = dates.join(",")
+      finalQuizzes = Array.new
+      availableQuizes = query[0][2].split(" ")
+      availableQuizes.each do |quiz|
+        if quiz!=quizId.to_s
+          finalQuizzes.push(quiz)
+        end
+      end
+      finalQuizzes = finalQuizzes.join(" ")
+      dbStudent.execute "update student set scores='#{localScores},', dates='#{dates}', availablequizes='#{finalQuizzes}' where id=#{studentId}"
+    end
+  return "update student set scores='#{localScores},', dates='#{dates},', availablequizes='#{finalQuizzes}' where id=#{studentId}"
 end
