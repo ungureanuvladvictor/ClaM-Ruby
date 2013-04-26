@@ -413,7 +413,7 @@ def submitQuiz(dbStudent, studentId, quizId, quizResult, date)
     query = dbStudent.execute "select scores,dates,availablequizes from student where id=#{studentId}"
     quizzes = Array.new
     if query[0][0] == ""
-      dbStudent.execute "update student set scores='#{quizId} #{quizResult},', date='#{date},' where id=#{studentId}"
+      dbStudent.execute "update student set scores='#{quizId} #{quizResult},', dates='#{date},' where id=#{studentId}"
     else
       localScores = query[0][0].split","
       localScores.push("#{quizId} #{quizResult}")
