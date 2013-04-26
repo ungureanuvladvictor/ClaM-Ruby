@@ -4,7 +4,12 @@ rescue LoadError
   require "../lib/cheat_algorithm.rb"
 end
 
-require 'sqlite3'
+begin
+  require 'sqlite3'
+rescue LoadError
+  alert "No SQLite was found.\n Please install sqlite3-ruby gem before running this application."
+end
+
 require 'socket'
 require 'timeout'
 
