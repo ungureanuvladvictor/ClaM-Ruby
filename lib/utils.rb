@@ -581,3 +581,9 @@ def quizesForStudent(dbStudent,dbQuiz,studentId)
   query  = dbStudent.execute "select scores,dates from student"
   p query
 end
+
+def deleteStudentWithId(dbStudent, studentId)
+  query = "delete from student where id=#{studentId}"
+  dbStudent.execute query
+  return query
+end
