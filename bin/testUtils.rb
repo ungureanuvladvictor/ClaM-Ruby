@@ -12,7 +12,7 @@ begin
    # getQuizzesTaken(student,quiz,4)
     #p getDatesForStudentId(student,4)
    #p submitQuiz(student, 4, 1, 100,"11.03.2013")
-  # getStudentsAvgGradeForQuizId(student,1)
+p   getStudentsAvgGradeForQuizId(student,3)
   #p getFullQuizzes(quiz, student)
  # p getStudentNrWithQuizId(student,4)
   # addStudent(student, quiz, "filip", "fp", "fp")

@@ -438,7 +438,14 @@ end
 def getStudentsAvgGradeForQuizId(dbStudent, quizId)
   number = 0
   avg = 0
+  me = Array.new
   result = dbStudent.execute "select scores from student"
+  result.each do |test|
+    if test != [nil]
+      me.push(test)
+    end
+  end
+  result = me
   if result[0][0] == nil
     return nil
   else
@@ -459,7 +466,7 @@ def getStudentsAvgGradeForQuizId(dbStudent, quizId)
   if number.zero? || avg.zero?
     return 0
   else
-    return (avg/number.to_f).round(2)
+    return (avg.to_f/number.to_f).to_s[0,5]
   end
 end
 
