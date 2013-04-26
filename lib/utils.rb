@@ -664,11 +664,41 @@ def deleteAllQuizzes(dbQuiz, dbStudent)
      end
 end
 
+def changePass(dbStudent, studentId, pass)
+    query = "update student set pass='#{pass}' where id=#{studentId}"
+    dbStudent.execute query
+    executeStudentUpdate($host, $port, query)
+end
+=begin
 def deleteQuizWithId(dbQuiz, dbStudent, quizId)
     #query = "delete from quiz where id=#{quizId}"
     #dbQuiz.execute query
     #executeQuizzUpdate($host,$port,query)
     query = "select id, scores,availablequizes,dates from student"
     result = dbStudent.execute query
-    p result
+    result.each do |sinfo|
+      id = sinfo[0]
+      availableQuiz = sinfo[2]
+      scores = sinfo[3]
+      if scores == nil
+        break
+      end
+      newScores = Array.new
+      newAvailable = Array.new
+      if availableQuiz.to_s == ""
+        newAvailable.push("")
+      else
+        availableQuiz.split(" ").each do |quiz|
+          if quiz.to_s != quizId.to_s
+            newAvailable.push(quiz)
+          end
+        end
+        #newAvailable
+         scores.each do |score|
+          score = score.split(",")
+           p score
+         end
+      end
+    end
 end
+=end
