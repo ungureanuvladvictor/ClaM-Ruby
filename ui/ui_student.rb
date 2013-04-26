@@ -1,4 +1,4 @@
-require 'ui_table'
+require 'ui/ui_table'
 
 class StudentMenu < Shoes
 

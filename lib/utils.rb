@@ -1,4 +1,4 @@
-require '../lib/cheat_algorithm'
+require 'lib/cheat_algorithm'
 require 'sqlite3'
 require 'socket'
 require 'timeout'
