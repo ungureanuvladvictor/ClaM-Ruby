@@ -195,7 +195,7 @@ def addQuiz(db,studentdb, name, questions)
    result.each do |student|
      student[1] = student[1]+" #{id}"
      studentdb.execute "update student set availablequizes='#{student[1]}' where id=#{student[0]}"
-     executeStudentUpdate('localhost',2000,"update student set availablequizes='#{student[1]}' where id=#{student[0]}")
+     executeStudentUpdate($host, $port, "update student set availablequizes='#{student[1]}' where id=#{student[0]}")
    end
   return "insert into quiz values(#{id},'#{name}','#{questions}')"
 end
