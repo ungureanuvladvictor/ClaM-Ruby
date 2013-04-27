@@ -32,7 +32,7 @@ require 'digest/sha1'
 			@host = edit_line(:width => 0.52, :margin_left => 40, :margin_right => 10)
 			@host.text = "localhost"
 			@port = edit_line(:width => 0.2, :right => 20)
-			@port.text = "20011"
+			@port.text = "2001"
 		end
 
 		@b1 = button "Login" do
@@ -58,7 +58,6 @@ require 'digest/sha1'
 			end
 
 			sha_pass = Digest::SHA1.hexdigest @password.text
-			p @username.text
 			p sha_pass
 
 			if (checkLoginAdmin($admin,@username.text,sha_pass) == true)

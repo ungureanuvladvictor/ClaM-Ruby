@@ -28,7 +28,7 @@ def calc_cheat(a,b)
       end
     end
     @count = @count.to_f/@wordsa.length.to_f
-    return [count>0.75,count]
+    return [count>0.85,count]
   end
   
   @F=Array.new(a.length)
