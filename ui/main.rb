@@ -13,7 +13,6 @@ rescue LoadError
 	require 'ui_quiz'
 end
 
-
 Shoes.app(
 	:width => 375, 
 	:height => 450, 

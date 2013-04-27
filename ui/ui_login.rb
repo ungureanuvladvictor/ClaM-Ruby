@@ -1,3 +1,5 @@
+require 'digest/sha1'
+
  class Login < Shoes
 
  url '/', :login
@@ -55,9 +57,12 @@
 				return
 			end
 
-			if (checkLoginAdmin($admin,@username.text,@password.text) == true)
+			sha_pass = Digest::SHA1.hexdigest @password.text
+			p sha_pass
+
+			if (checkLoginAdmin($admin,@username.text,sha_pass) == true)
 				visit "/professor_menu"
-			elsif (checkLoginStudent($student,@username.text,@password.text) == true)
+			elsif (checkLoginStudent($student,@username.text,sha_pass) == true)
 				visit "/student_menu"
 			else
 				alert "Invalid credentials."

@@ -4,6 +4,8 @@ rescue LoadError
   	require 'ui_table'
 end
 
+require 'digest/sha1'
+
 class StudentMenu < Shoes
 
 url '/student_menu', :student_menu
@@ -78,7 +80,8 @@ def student_stats(id)
 
 				# Save pwd to db
 
-				changePass($student,id,newpass)
+				sha_pass = Digest::SHA1.hexdigest newpass
+				changePass($student,id,sha_pass)
 
 			end
 
@@ -275,7 +278,11 @@ def add_student
 				end
 				
 				#request to database
-				cmd = addStudent($student,$quiz,@name.text,@username.text,@pwd.text)
+
+				sha_pass = Digest::SHA1.hexdigest @pwd.text
+				p sha_pass
+
+				cmd = addStudent($student,$quiz,@name.text,@username.text,sha_pass)
 				executeStudentUpdate($host,$port,cmd)
 
 				visit "/manage_students"
