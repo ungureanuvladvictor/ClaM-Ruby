@@ -366,14 +366,15 @@ def manage_questions(qid)
 
 			@submit = button "Submit!" do
 				# CHECK IF FIELDS FILLED				
-				ids = Array.new
+				success_q = true
+				success_g = true
 
-				deleteQuizWithId($quiz, $student, $question, qid)
+				ids = Array.new
 
 				@input.each do |x|
 
 					x_name = x[0].text
-					x_points = x[1].text
+					x_points = x[1].text.to_i
 					x_correct = x[2].text
 					x_input = x[3]
 
@@ -389,6 +390,10 @@ def manage_questions(qid)
 
 					if (!x_input.nil?)
 						x_input.each do |y|
+							if (y.text == "" && success_q)
+								success_q = false
+								alert "Please provide name for all options!"
+							end
 							x_input_s = x_input_s + y.text + "//"
 						end
 					end
@@ -398,25 +403,54 @@ def manage_questions(qid)
 					#debug "Question:\n Name: #{x_name} \n Points: #{x_points} \n Correct = #{x_correct} \n Inputs: #{x_input_s}"
 
 					#write question to db
-					ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
 
-					#debug ret[1]
+					if (x_name == "" && success_q)
+						success_q = false
+						alert "Please, provide name for all questions!"
+					end
 
-					executeQuestionUpdate($host,$port,ret[0])
+					if (x_points < 0 && success_q)
+						success_q = false
+						alert "Please, provide positive amount of points for each question!"
+					end
 
-					#push id to ids
-					ids.push(ret[1])
+					if (x_correct == "" && success_q)
+						success_q = false
+						alert "Please, provide correct answer for every question!"
+					end
+
+					if (success_q)
+						ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
+
+						#debug ret[1]
+
+						executeQuestionUpdate($host,$port,ret[0])
+
+						#push id to ids
+						ids.push(ret[1])
+					end
 
 				end
 
 				#create quiz with ids
 				id_string = ids.join(" ")
-				cmd = addQuiz($quiz, $student, @name_q.text, id_string)
-				executeQuizzUpdate($host,$port,cmd)
 
-				
+				if (!success_q)
+					success_g = false
+				end
 
-				visit "/manage_quizzes"
+				if (@name_q.text == "")
+				 	alert "Please, provide name for a quiz!"
+				 	success_g = false
+				end
+
+				if (success_g)
+					cmd = addQuiz($quiz, $student, @name_q.text, id_string)
+
+					executeQuizzUpdate($host,$port,cmd)
+
+					visit "/manage_quizzes"
+				end
 			
 			end
 
@@ -761,12 +795,15 @@ def add_quiz
 				# CHECK IF FIELDS FILLED
 				#write to database (somehow)
 				
+				success_q = true
+				success_g = true
+
 				ids = Array.new
 
 				@input.each do |x|
 
 					x_name = x[0].text
-					x_points = x[1].text
+					x_points = x[1].text.to_i
 					x_correct = x[2].text
 					x_input = x[3]
 
@@ -782,6 +819,10 @@ def add_quiz
 
 					if (!x_input.nil?)
 						x_input.each do |y|
+							if (y.text == "" && success_q)
+								success_q = false
+								alert "Please provide name for all options!"
+							end
 							x_input_s = x_input_s + y.text + "//"
 						end
 					end
@@ -791,24 +832,54 @@ def add_quiz
 					#debug "Question:\n Name: #{x_name} \n Points: #{x_points} \n Correct = #{x_correct} \n Inputs: #{x_input_s}"
 
 					#write question to db
-					ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
 
-					#debug ret[1]
+					if (x_name == "" && success_q)
+						success_q = false
+						alert "Please, provide name for all questions!"
+					end
 
-					executeQuestionUpdate($host,$port,ret[0])
+					if (x_points < 0 && success_q)
+						success_q = false
+						alert "Please, provide positive amount of points for each question!"
+					end
 
-					#push id to ids
-					ids.push(ret[1])
+					if (x_correct == "" && success_q)
+						success_q = false
+						alert "Please, provide correct answer for every question!"
+					end
+
+					if (success_q)
+						ret = addQuestion($question, x_name, x_type, x_input_s, x_correct, x_points)
+
+						#debug ret[1]
+
+						executeQuestionUpdate($host,$port,ret[0])
+
+						#push id to ids
+						ids.push(ret[1])
+					end
 
 				end
 
 				#create quiz with ids
 				id_string = ids.join(" ")
-				cmd = addQuiz($quiz, $student, @name_q.text, id_string)
 
-				executeQuizzUpdate($host,$port,cmd)
+				if (!success_q)
+					success_g = false
+				end
 
-				visit "/manage_quizzes"
+				if (@name_q.text == "")
+				 	alert "Please, provide name for a quiz!"
+				 	success_g = false
+				end
+
+				if (success_g)
+					cmd = addQuiz($quiz, $student, @name_q.text, id_string)
+
+					executeQuizzUpdate($host,$port,cmd)
+
+					visit "/manage_quizzes"
+				end
 			
 			end
 
