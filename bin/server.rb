@@ -1,7 +1,7 @@
 require '../lib/multiclient_tcp_server'
 require 'sqlite3'
 
-srv = MulticlientTCPServer.new( 2000, 1, false )
+srv = MulticlientTCPServer.new( 2001, 1, false )
 
 loop do
   if sock = srv.get_socket
