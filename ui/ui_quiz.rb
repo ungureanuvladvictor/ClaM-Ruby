@@ -598,7 +598,7 @@ end
 def add_quiz
 
 	stack(:margin => 5) do
-		para link("Back", :click => $lastvisited)
+		para link("Back", :click => "/manage_quizzes")
 
 		flow(:margin => 10) do
 			para "Name: "

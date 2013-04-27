@@ -646,6 +646,9 @@ def rescaleQuizId(dbQuiz,dbStudent,quizId, grade)
       if i[0].to_i == quizId.to_i
         grd =  i[1].to_f + grade
         grd = grd.round(2)
+        if grd < 0 
+          grd =0 
+        end
         #p grd
         #p query[j][1]
         finalresult.push([i[0],grd].join(" "))
